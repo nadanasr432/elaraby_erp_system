@@ -1,0 +1,38 @@
+<?php
+
+return [
+    "modify-customer-sales-invoice" => "تعديل فاتورة مبيعات",
+    "client-name" => "اسم العميل",
+    "invoice-date" => "تاريخ الفاتورة",
+    "invoice-time" => "وقت الفاتورة",
+    "choose-store" => "اختر المخزن",
+    "product-code" => "كود المنتج / الاسم",
+    "product-price" => "سعر المنتج",
+    "sales-invoice-item-data-no" => "بيانات عناصر فاتورة المبيعات رقم",
+    "discount-on-the-total-bill" => "خصم على اجمالى الفاتورة",
+    "invoice-number" => "رقم الفاتورة",
+    "product-name" => "اسم المنتج",
+    "list-all-sales-invoices" => "عرض كل فواتير المبيعات",
+    "returns-quantity" => "كمية الاسترجاع",
+    "quantity-price" => "سعر الكمية",
+    "customer-indebtedness-before-return" => "مديونية العميل قبل الارتجاع",
+    "customer-indebtedness-after-return" => "مديونية العميل بعد الارتجاع",
+    "product-price-before-return" => "رصيد المنتج قبل الارتجاع",
+    "product-price-after-return" => "رصيد المنتج بعد الارتجاع",
+    "offer-start-date" => "تاريخ بدأ العرض",
+    "offer-end-date" => "تاريخ انتهاء العرض",
+    "select-store" => "اختر المخزن",
+    "search-by-quote-price" => "بحث برقم عرض السعر",
+    "list-all-quotes" => "عرض كل عروض الاسعار",
+    "prices-for-tax" => "الاسعار بالنسبة الضريبة",
+    "not-including-tax" => "غير شاملة الضريبة",
+    "including-tax" => "شاملة الضريبة",
+    "tax" => "الضريبة",
+    "choose-tax" => "اختر الضريبة",
+
+
+    "termsAndConditionsSaleBills" => "الشروط والاحكام لفواتير المبيعات",
+    "back" => "عودة للخلف",
+    "update" => "تحديث",
+    "termsAndConditionsQuotation" => "الشروط والاحكام لعروض الاسعار",
+];

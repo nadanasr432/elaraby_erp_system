@@ -1,0 +1,38 @@
+<?php
+
+return [
+    "modify-customer-sales-invoice" => "Modify customer sales invoice",
+    "client-name" => "Client name",
+    "invoice-date" => "Invoice date",
+    "invoice-time" => "Invoice time",
+    "choose-store" => "Choose store",
+    "product-code" => "Product code",
+    "product-price" => "Product price",
+    "sales-invoice-item-data-no" => "Sales Invoice Item Data No.",
+    "discount-on-the-total-bill" => "Discount on the total bill",
+    "invoice-number" => "Invoice number",
+    "product-name" => "Product name",
+    "list-all-sales-invoices" => "List all sales invoices",
+    "returns-quantity" => "Return quantity",
+    "quantity-price" => "Quantity price",
+    "customer-indebtedness-before-return" => "Customer indebtedness before return",
+    "customer-indebtedness-after-return" => "Customer indebtedness after return",
+    "product-price-before-return" => "Product price before return",
+    "product-price-after-return" => "Product price after return",
+    "offer-start-date" => "Offer start date",
+    "offer-end-date" => "Offer end date",
+    "select-store" => "Select store",
+    "search-by-quote-price" => "Search by quote price",
+    "list-all-quotes" => "List all quotes",
+    "prices-for-tax" => "Prices for tax",
+    "not-including-tax" => "Not including tax",
+    "including-tax" => "Including tax",
+    "tax" => "Tax",
+    "choose-tax" => "Choose Tax",
+
+
+    "termsAndConditionsSaleBills" => "Terms & Conditions For Sales Invoices",
+    "back" => "Back",
+    "update" => "Update",
+    "termsAndConditionsQuotation" => "Terms & Conditions For Quotations",
+];
