@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Mail\sendingClientSummary;
-use App\Mail\sendingSupplierSummary;
-use App\Models\BankBuyCash;
-use App\Models\BankCash;
-use App\Models\Bondclient;
-use App\Models\BuyBill;
-use App\Models\BuyBillReturn;
-use App\Models\BuyCash;
-use App\Models\Cash;
-use App\Models\Company;
-use App\Models\Employee;
-use App\Models\EmployeeCash;
-use App\Models\ExtraSettings;
-use App\Models\Gift;
-use App\Models\OuterClient;
-use App\Models\Quotation;
-use App\Models\SaleBill;
-use App\Models\SaleBillReturn;
-use App\Models\Supplier;
 use Carbon\Carbon;
+use App\Models\Cash;
+use App\Models\Gift;
+use App\Models\BuyBill;
+use App\Models\BuyCash;
+use App\Models\Company;
+use App\Models\BankCash;
+use App\Models\Employee;
+use App\Models\SaleBill;
+use App\Models\Supplier;
+use App\Models\Quotation;
+use App\Models\Bondclient;
+use App\Models\BankBuyCash;
+use App\Models\OuterClient;
+use App\Models\EmployeeCash;
 use Illuminate\Http\Request;
+use App\Models\BuyBillReturn;
+use App\Models\ExtraSettings;
+use App\Models\SaleBillReturn;
+use App\Mail\sendingClientSummary;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Mail\sendingSupplierSummary;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ClientsSummaryRequest;
+use App\Http\Requests\EmployeesSummaryRequest;
+use App\Http\Requests\SuppliersSummaryRequest;
 
 class SummaryController extends Controller
 {
@@ -38,11 +41,8 @@ class SummaryController extends Controller
         return view('client.summary.clients', compact('company', 'company_id', 'outer_clients'));
     }
 
-    public function post_clients_summary(Request $request)
+    public function post_clients_summary(ClientsSummaryRequest $request)
     {
-        $this->validate($request, [
-            'outer_client_id' => 'required',
-        ]);
         //client id..
         $outer_client_id = $request->outer_client_id;
 
@@ -141,11 +141,8 @@ class SummaryController extends Controller
         return view('client.summary.suppliers', compact('company', 'company_id', 'suppliers'));
     }
 
-    public function post_suppliers_summary(Request $request)
+    public function post_suppliers_summary(SuppliersSummaryRequest $request)
     {
-        $this->validate($request, [
-            'supplier_id' => 'required',
-        ]);
         $supplier_id = $request->supplier_id;
         $from_date = $request->from_date;
         $to_date = $request->to_date;
@@ -210,14 +207,11 @@ class SummaryController extends Controller
         return view('client.summary.employees', compact('company', 'company_id', 'employees'));
     }
 
-    public function post_employees_summary(Request $request)
+    public function post_employees_summary(EmployeesSummaryRequest $request)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
         $employees = $company->employees;
-        $this->validate($request, [
-            'employee_id' => 'required',
-        ]);
         $extra_settings = ExtraSettings::where('company_id', $company_id)->first();
         $currency = $extra_settings->currency;
         $employee_id = $request->employee_id;

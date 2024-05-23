@@ -1,11 +1,12 @@
 <?php
 namespace App\Http\Controllers\Client;
-use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Category;
 use App\Models\SubCategory;
-use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SubCategoryRequest;
 
 class SubCategoryController extends Controller
 {
@@ -25,12 +26,8 @@ class SubCategoryController extends Controller
         return view('client.sub_categories.create', compact('company_id', 'company','categories'));
     }
 
-    public function store(Request $request)
+    public function store(SubCategoryRequest  $request)
     {
-        $this->validate($request, [
-            'sub_category_name' => 'required',
-            'category_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $sub_category = SubCategory::create($data);
@@ -47,12 +44,8 @@ class SubCategoryController extends Controller
         return view('client.sub_categories.edit', compact('sub_category','categories', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(SubCategoryRequest  $request, $id)
     {
-        $this->validate($request, [
-            'sub_category_name' => 'required',
-            'category_id' => 'required',
-        ]);
         $input = $request->all();
         $sub_category = SubCategory::findOrFail($id);
         $sub_category->update($input);

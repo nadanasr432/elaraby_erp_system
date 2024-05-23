@@ -848,6 +848,7 @@
 
 
 <script src="{{ asset('app-assets/js/jquery.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         setTimeout(function () {
@@ -1143,7 +1144,7 @@
             }, function (allData) {
                 allData = JSON.parse(allData);
                 (allData[1].data).forEach(function (product) {
-                    let productElement = '<div class="card cproduct m-nos product" product_id="' + product.id + '" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important; border: 1px solid rgba(229, 229, 229, 0.4) !important; min-height: 172px !important; max-height: 172px !important; width: 12rem !important;margin-bottom: 5px !important;"> <div class="imgBox" style="height: 75px !important; width: 100% !important;"> <img style="height: 100% !important; width: 100% !important; object-fit: contain !important;" src="../../../' + (product.product_pic ? product.product_pic : 'assets/images/noprod.png') + '" class="card-img-top"> </div> <div class="card-body cbod" style="padding: 6px !important;"> <h5 class="card-title ctitle" style="font-size: 12px !important;min-height: 33px !important;color: #0A246A !important; font-weight: 600 !important;">' + product.product_name + '</h5> <p class="card-text ctxt" style="margin-bottom: 3px !important;">' + product.code_universal + '</p> <div class="row col-12 justify-content-between m-0 pl-0"> <span class="text-warning font-weight-bold"> ' + product.sector_price + ' </span> <span class="row p-0 d-inline"> <span class="plusIcon">+</span> <span class="m-nos font-weight-bold">1</span> <span class="minusIcon">-</span> </span> </div> </div> </div>';
+                    let productElement = '<div class="card cproduct m-nos product" product_id="' + product.id + '" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important; border: 1px solid rgba(229, 229, 229, 0.4) !important; min-height: 172px !important; max-height: 172px !important; width: 12rem !important;margin-bottom: 5px !important;"> <div class="imgBox" style="height: 75px !important; width: 100% !important;"> <img style="height: 100% !important; width: 100% !important; object-fit: contain !important;" src="../../../' + (product.product_pic ? product.product_pic : 'images/logo.png') + '" class="card-img-top"> </div> <div class="card-body cbod" style="padding: 6px !important;"> <h5 class="card-title ctitle" style="font-size: 12px !important;min-height: 33px !important;color: #0A246A !important; font-weight: 600 !important;">' + product.product_name + '</h5> <p class="card-text ctxt" style="margin-bottom: 3px !important;">' + product.code_universal + '</p> <div class="row col-12 justify-content-between m-0 pl-0"> <span class="text-warning font-weight-bold"> ' + product.sector_price + ' </span> <span class="row p-0 d-inline"> <span class="plusIcon">+</span> <span class="m-nos font-weight-bold">1</span> <span class="minusIcon">-</span> </span> </div> </div> </div>';
                     $(".products").append(productElement);
                 });
                 (allData[0]).forEach(function (subcat) {

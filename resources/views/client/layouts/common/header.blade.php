@@ -207,10 +207,10 @@
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                             <li class="dropdown-menu-header">
                                 <h4 class="dropdown-header m-0">
-                                    <span class="grey darken-2">الرسائل</span>
+                                    <span class="grey darken-2">@lang('home.Messages')  </span>
                                     <span
                                         class="notification-tag badge badge-default badge-danger float-right m-0">
-                                        New
+                                       @lang('home.New')  
                                     </span>
                                 </h4>
                             </li>
@@ -218,7 +218,7 @@
                             <li class="dropdown-menu-footer">
                                 <a class="dropdown-item text-muted text-center"
                                    href="#">
-                                    لا يوجد رسائل حالية!
+                                   @lang('home.There are no current messages!')  
                                 </a>
                             </li>
                         </ul>
@@ -240,10 +240,10 @@
                         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                             <li class="dropdown-menu-header">
                                 <h4 class="dropdown-header m-0">
-                                    <span class="grey darken-2">الإشعارات</span>
+                                    <span class="grey darken-2">@lang('home.Notifications')   </span>
                                     <span
                                         class="notification-tag badge badge-default badge-danger float-right m-0">
-                                        New
+                                         @lang('home.New') 
                                     </span>
                                 </h4>
                             </li>
@@ -251,7 +251,7 @@
                             <li class="dropdown-menu-footer">
                                 <a class="dropdown-item text-muted text-center"
                                    href="#">
-                                    لا يوجد اشعارات حتي الان!
+                                 @lang('home.No notifications yet!')  
                                 </a>
                             </li>
                         </ul>
@@ -276,10 +276,10 @@
                             <li class="dropdown-menu-header">
                                 <h4 class="dropdown-header m-0">
                                     <span class="grey darken-2"
-                                          style="font-size: 16px !important;">اختصارات سريعة</span>
+                                          style="font-size: 16px !important;">@lang('home.Quick shortcuts') </span>
                                     <span
                                         class="notification-tag badge badge-default badge-danger float-right m-0">
-                                        New
+                                       @lang('home.New') 
                                     </span>
                                 </h4>
                             </li>
@@ -290,7 +290,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    اضافة فئة
+                                    @lang('home.Add category') 
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.products.create') }}">
@@ -298,7 +298,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    اضافة منتج
+                                    @lang('home.Add a product')
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.outer_clients.create') }}">
@@ -306,7 +306,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    اضافة عميل
+                                  @lang('home.Add a client') 
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.suppliers.create') }}">
@@ -314,7 +314,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    اضافة مورد
+                                  @lang('home.Add a resource')  
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.sale_bills.create') }}">
@@ -322,7 +322,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    فاتورة بيع جديدة
+                                  @lang('home.New bill of sale')  
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.purchase_orders.create') }}">
@@ -330,7 +330,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    فاتورة مشتريات جديدة
+                                   @lang('home.New purchase invoice') 
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.add.cash.suppliers') }}">
@@ -338,7 +338,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    دفع نقدي لمورد
+                                   @lang('home.Cash payment to a supplier') 
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.give.cash.clients') }}">
@@ -346,7 +346,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    دفع نقدي لعميل
+                                  @lang('home.Cash payment to a customer')  
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('employees.get.cash') }}">
@@ -354,7 +354,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    دفع نقدي لموظف
+                                 @lang('home.Cash payment to an employee')   
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.add.cash.clients') }}">
@@ -362,7 +362,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    تسجيل دفعة من عميل
+                                  @lang('home.Register a payment from a customer')  
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.give.cash.suppliers') }}">
@@ -370,7 +370,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    تسجيل دفعة من مورد
+                                   @lang('home.Register a batch from a supplier') 
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('client.expenses.create') }}">
@@ -378,7 +378,7 @@
                                         <path
                                             d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                                     </svg>
-                                    تسجيل دفعة من موظف
+                                   @lang('home.Register a batch from an employee') 
                                 </a>
                             </li>
                         </ul>

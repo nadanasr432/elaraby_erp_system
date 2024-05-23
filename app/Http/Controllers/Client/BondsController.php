@@ -19,105 +19,78 @@ class BondsController extends Controller
     public function getClientsBonds()
     {
         $bondClients = Bondclient::where("company_id", Auth::user()->company_id)->latest()->get();
-        return view('client.clients_bonds.index',compact("bondClients"));
+        return view('client.clients_bonds.index', compact("bondClients"));
     }
+
     //show create page..
     public function createClientsBonds()
     {
-        //get company..
         $company_id = Auth::user()->company_id;
-        $company = Company::FindOrFail($company_id);
+        $company = Company::findOrFail($company_id);
 
-        //get all clients..
-        if(in_array('مدير النظام',Auth::user()->role_name)){
+        if (in_array('مدير النظام', Auth::user()->role_name)) {
             $outer_clients = OuterClient::where('company_id', $company_id)->get();
-        }
-        else{
+        } else {
             $outer_clients = OuterClient::where('company_id', $company_id)
-            ->where(function ($query) {
-                $query->where('client_id',Auth::user()->id)
-                ->orWhereNull('client_id');
-            })->get();
+                ->where(function ($query) {
+                    $query->where('client_id', Auth::user()->id)
+                        ->orWhereNull('client_id');
+                })->get();
         }
 
-
-        return view('client.clients_bonds.create',compact("outer_clients"));
+        return view('client.clients_bonds.create', compact("outer_clients"));
     }
+
 
     //store new clientBond...
-    public function storeNewBond(Request $request){
-
+    public function storeNewBond(Request $request)
+    {
         $company_id = Auth::user()->company_id;
+        $outerClient = OuterClient::where("client_name", $request->client)->where('company_id', $company_id)->first();
 
-        //get client from outClietns table...
-        $OuterClient = OuterClient::where("client_name", $request->client)->where('company_id', $company_id)->get()->first();
-
-        if($request->type == "قبض"){
-            $OuterClient->prev_balance -= $request->amount;
-        }else{
-            $OuterClient->prev_balance += $request->amount;
+        if ($request->type == "قبض") {
+            $outerClient->prev_balance -= $request->amount;
+        } else {
+            $outerClient->prev_balance += $request->amount;
         }
-        $OuterClient->save();
+        $outerClient->save();
 
-        try{
-            $bond = Bondclient::create([
-                "company_id"=>$request->company_id,
-                "client"=>$request->client,
-                "account"=>$request->account,
-                "type"=>$request->type,
-                "date"=>$request->date,
-                "amount"=>$request->amount,
-                "notes"=>$request->notes
-            ]);
-        }catch(Exception $e){
-            return json_encode($e->getMessage());
+        try {
+            $bond = Bondclient::create($request->all());
+            return response()->json($bond->id);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
         }
-        return json_encode($bond->id);
     }
-
     public function deleteClientBond(Request $request)
     {
         Bondclient::destroy($request->client_bond_id);
         return redirect("ar/client/clients-bonds/index");
     }
 
-    public function getClientBond($id){
-
-        //get company..
+    public function getClientBond($id)
+    {
         $company_id = Auth::user()->company_id;
-        $company = Company::FindOrFail($company_id);
+        $company = Company::findOrFail($company_id);
 
-        //get all clients..
-        if(in_array('مدير النظام',Auth::user()->role_name)){
+        if (in_array('مدير النظام', Auth::user()->role_name)) {
             $outer_clients = OuterClient::where('company_id', $company_id)->get();
-        }
-        else{
+        } else {
             $outer_clients = OuterClient::where('company_id', $company_id)
-            ->where(function ($query) {
-                $query->where('client_id',Auth::user()->id)
-                ->orWhereNull('client_id');
-            })->get();
+                ->where(function ($query) {
+                    $query->where('client_id', Auth::user()->id)
+                        ->orWhereNull('client_id');
+                })->get();
         }
-
 
         $clientBond = Bondclient::find($id);
-        return view('client.clients_bonds.edit',compact("clientBond","outer_clients"));
+        return view('client.clients_bonds.edit', compact("clientBond", "outer_clients"));
     }
-
-    public function updateClientBond(Request $request){
-       $clientBond = Bondclient::find($request->client_bond_id);
-       $clientBond->client = $request->client;
-       $clientBond->account = $request->account;
-       $clientBond->type = $request->type;
-       $clientBond->date = $request->date;
-       $clientBond->amount = $request->amount;
-       $clientBond->notes = $request->notes;
-       if($clientBond->save()){
-            return json_encode(1);
-       }else{
-           return json_encode("err");
-       }
-
+    public function updateClientBond(Request $request)
+    {
+        $clientBond = Bondclient::find($request->client_bond_id);
+        $clientBond->update($request->all());
+        return response()->json(1);
     }
 
     //index page for supliers bonds..
@@ -135,132 +108,124 @@ class BondsController extends Controller
     }
 
     //store new supplierBond...
-    public function storeNewBondSupplier(Request $request){
-
+    public function storeNewBondSupplier(Request $request)
+    {
         $company_id = Auth::user()->company_id;
 
-        //get client from outClietns table...
-        $supplier = Supplier::where("supplier_name", $request->supplier)->where('company_id', $company_id)->get()->first();
+        $supplier = Supplier::where("supplier_name", $request->supplier)->where('company_id', $company_id)->first();
 
-        if($request->type == "قبض"){
+        if ($request->type == "قبض") {
             $supplier->prev_balance -= $request->amount;
-        }else{
+        } else {
             $supplier->prev_balance += $request->amount;
         }
         $supplier->save();
 
-
-
-        try{
+        try {
             $bond = Bondsupplier::create([
-                "company_id"=>$request->company_id,
-                "supplier"=>$request->supplier,
-                "account"=>$request->account,
-                "type"=>$request->type,
-                "date"=>$request->date,
-                "amount"=>$request->amount,
-                "notes"=>$request->notes
+                "company_id" => $request->company_id,
+                "supplier" => $request->supplier,
+                "account" => $request->account,
+                "type" => $request->type,
+                "date" => $request->date,
+                "amount" => $request->amount,
+                "notes" => $request->notes
             ]);
-        }catch(Exception $e){
-            return json_encode($e->getMessage());
+            return response()->json($bond->id);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage(), 500);
         }
-        return json_encode($bond->id);
     }
 
-    public function showClientBondPrint($clientid){
-        //get company_id..
+    public function showClientBondPrint($clientid)
+    {
         $company_id = Auth::user()->company_id;
-        $company_data = Company::where("id" , $company_id)->get()[0];
+        $company_data = Company::findOrFail($company_id);
         $clientBond = Bondclient::find($clientid);
-        $electronicStamp = ElectronicStamps::where('company_id',Auth::user()->company_id)->first();
-        return view('client.clients_bonds.show',compact("clientBond",'company_data','electronicStamp'));
+        $electronicStamp = ElectronicStamps::where('company_id', Auth::user()->company_id)->first();
+        return view('client.clients_bonds.show', compact("clientBond", 'company_data', 'electronicStamp'));
     }
-    public function getSupplierBond($supplierid){
 
-        //get company..
+    public function getSupplierBond($supplierid)
+    {
         $company_id = Auth::user()->company_id;
-        $company = Company::FindOrFail($company_id);
-
-        //get all suppliers according to company_id..
-        $suppliers = Supplier::where("company_id", Auth::user()->company_id)->get();
-
+        $company = Company::findOrFail($company_id);
+        $suppliers = Supplier::where("company_id", $company_id)->get();
         $supplierBond = Bondsupplier::find($supplierid);
-        return view('client.suppliers_bonds.edit',compact("supplierBond","suppliers"));
+        return view('client.suppliers_bonds.edit', compact("supplierBond", "suppliers"));
     }
 
-    public function updateSupplierBond(Request $request){
-       $supplierBond = Bondsupplier::find($request->supplier_bond_id);
-       $supplierBond->supplier = $request->supplier;
-       $supplierBond->account = $request->account;
-       $supplierBond->type = $request->type;
-       $supplierBond->date = $request->date;
-       $supplierBond->amount = $request->amount;
-       $supplierBond->notes = $request->notes;
-       if($supplierBond->save()){
-            return json_encode(1);
-       }else{
-           return json_encode("err");
-       }
+    public function updateSupplierBond(Request $request)
+    {
+        $supplierBond = Bondsupplier::find($request->supplier_bond_id);
+        $supplierBond->fill($request->all());
 
+        if ($supplierBond->save()) {
+            return response()->json(1);
+        } else {
+            return response()->json("err", 500);
+        }
     }
 
     public function deleteSupplierBond(Request $request)
     {
-        Bondsupplier::destroy($request->supplierID);
-        return redirect("ar/client/suppliers-bonds/index");
+        $bondId = $request->supplierID;
+        Bondsupplier::destroy($bondId);
+
+        return redirect()->route('ar.client.suppliers-bonds.index');
     }
 
-    public function showSupplierBondPrint($supplierid){
-        $electronicStamp = ElectronicStamps::where('company_id',Auth::user()->company_id)->first();
-        $supplierBond = Bondsupplier::find($supplierid);
-        $company_data = Company::where("id" , Auth::user()->company_id)->get()[0];
+    public function showSupplierBondPrint($supplierid)
+    {
+        $company_id = Auth::user()->company_id;
+        $company_data = Company::findOrFail($company_id);
+        $supplierBond = Bondsupplier::findOrFail($supplierid);
+        $electronicStamp = ElectronicStamps::where('company_id', $company_id)->first();
 
-        return view('client.suppliers_bonds.show',compact("supplierBond",'electronicStamp','company_data'));
+        return view('client.suppliers_bonds.show', compact("supplierBond", 'electronicStamp', 'company_data'));
     }
 
 
 
-    public function electronicStmapPage(){
-        $electronicStamp = ElectronicStamps::where('company_id',Auth::user()->company_id)->first();
-        return view('client.electronic_stamp',compact('electronicStamp'));
+    public function electronicStmapPage()
+    {
+        $electronicStamp = ElectronicStamps::where('company_id', Auth::user()->company_id)->first();
+        return view('client.electronic_stamp', compact('electronicStamp'));
     }
 
-    public function addElectronicStamp(Request $request){
+    public function addElectronicStamp(Request $request)
+    {
 
-        $electronicStamp = ElectronicStamps::where('company_id',Auth::user()->company_id)->first();
+        $electronicStamp = ElectronicStamps::where('company_id', Auth::user()->company_id)->first();
 
 
         $img = $_FILES['elec_stamp'];
-        $imgName = time(). "." . strtolower(explode(".", $img['name'])[1]);
+        $imgName = time() . "." . strtolower(explode(".", $img['name'])[1]);
         $path = base_path("assets/images/electronic_stamps/" . $imgName);
 
 
-        if(move_uploaded_file($img['tmp_name'], $path)){
+        if (move_uploaded_file($img['tmp_name'], $path)) {
 
             //check if there is an stamp already uploaded
-            if($electronicStamp !== null ){
+            if ($electronicStamp !== null) {
 
                 //yes there is an stamp uploaded... so we need to delete it.
-                $img_path = base_path("assets/images/electronic_stamps/".$electronicStamp->img);
-                if(File::exists($img_path)) {
+                $img_path = base_path("assets/images/electronic_stamps/" . $electronicStamp->img);
+                if (File::exists($img_path)) {
                     File::delete($img_path);
                 }
 
                 $electronicStamp->img = $imgName;
                 $electronicStamp->save();
-            }else{
+            } else {
                 $electronicStamp = new ElectronicStamps();
                 $electronicStamp->img = $imgName;
                 $electronicStamp->company_id = Auth::user()->company_id;
                 $electronicStamp->save();
             }
             echo $imgName;
-        }else{
+        } else {
             echo "err";
         }
-
     }
-
-
-
 }

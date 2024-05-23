@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Bank;
-use App\Models\BankBuyCash;
-use App\Models\BankCash;
 use App\Models\Company;
+use App\Models\BankCash;
+use App\Models\Supplier;
+use App\Models\BankBuyCash;
 use App\Models\OuterClient;
 
-use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BankClientsRequest;
+use App\Http\Requests\BankSuppliersRequest;
 
 
 class CashBankController extends Controller
@@ -48,16 +50,9 @@ class CashBankController extends Controller
         return view('client.finances.paymentsbank.clients', compact('company_id', 'cashs', 'company'));
     }
 
-    public function store_cashbank_clients(Request $request)
+    public function store_cashbank_clients(BankClientsRequest  $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'bank_id' => 'required',
-        ]);
+        
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -83,16 +78,9 @@ class CashBankController extends Controller
             ->with('success', 'تم الدفع البنكى من عميل بنجاح');
     }
 
-    public function update_cashbank_clients(Request $request, $id)
+    public function update_cashbank_clients(BankClientsRequest  $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'bank_id' => 'required',
-        ]);
+      
         $data = $request->all();
 
         // Return the old values before the operation
@@ -202,16 +190,8 @@ class CashBankController extends Controller
         return view('client.finances.paymentsbank.suppliers', compact('company_id', 'buy_cashs', 'company'));
     }
 
-    public function store_cashbank_suppliers(Request $request)
+    public function store_cashbank_suppliers(BankSuppliersRequest  $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'bank_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -237,19 +217,9 @@ class CashBankController extends Controller
             ->with('success', 'تم الدفع البنكى الى المورد بنجاح');
     }
 
-    public function update_cashbank_suppliers(Request $request, $id)
+    public function update_cashbank_suppliers(BankSuppliersRequest  $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'bank_id' => 'required',
-        ]);
         $data = $request->all();
-
-        // Return the old values before the operation
         $old_cash = BankBuyCash::FindOrFail($id);
         $old_bank_id = $old_cash->bank_id;
         $old_bank = Bank::FindOrFail($old_bank_id);

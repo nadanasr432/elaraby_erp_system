@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\Employee;
-use App\Models\ExtraSettings;
 use App\Models\Payment;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\ExtraSettings;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -24,12 +25,8 @@ class PaymentController extends Controller
         return view('admin.payments.create', compact('companies'));
     }
 
-    public function store(Request $request)
+    public function store(PaymentRequest  $request)
     {
-        $this->validate($request, [
-            'company_id' => 'required',
-            'amount' => 'required',
-        ]);
         $data = $request->all();
         $payment = Payment::create($data);
         return redirect()->route('admin.payments.index')
@@ -43,12 +40,8 @@ class PaymentController extends Controller
         return view('admin.payments.edit', compact('payment', 'companies'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PaymentRequest  $request, $id)
     {
-        $this->validate($request, [
-            'company_id' => 'required',
-            'amount' => 'required',
-        ]);
         $input = $request->all();
         $payment = Payment::findOrFail($id);
         $payment->update($input);

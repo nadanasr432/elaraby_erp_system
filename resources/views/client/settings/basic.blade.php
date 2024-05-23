@@ -42,13 +42,19 @@
                 @csrf
                 @method('PATCH')
                 <input type="hidden" name="company_id" value="{{ $company->id }}" />
-                <div class="col-lg-4 col-xs-12 pull-right">
+             <div class="col-lg-4 col-xs-12 pull-right">
                     <div class="form-group">
                         <label for="brand_name">اسم المشروع</label>
-                        <input type="text" class="form-control" name="company_name" value="{{ $company->company_name }}"
-                            id="brand_name" />
+                        <input type="text" class="form-control" name="company_name" 
+                            id="brand_name"
+                            @if($company->company_name)
+                                value="{{ $company->company_name }}"
+                                 disabled
+                            @endif
+                        />
                     </div>
                 </div>
+
                 <div class="col-lg-4 col-xs-12 pull-right">
                     <div class="form-group">
                         <label for="person_name">اسم صاحب المشروع</label>

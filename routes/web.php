@@ -128,15 +128,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
                 'register' => false,
             ]
         );
-        Route::GET('admin/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
-        Route::POST('admin/login', 'Auth\LoginController@login');
-        Route::POST('admin/logout', 'Auth\LoginController@logout')->name('admin.logout');
-        Route::GET('admin/password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('admin.password.confirm');
-        Route::POST('admin/password/confirm', 'Auth\ConfirmPasswordController@confirm');
-        Route::POST('admin/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-        Route::GET('admin/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-        Route::POST('admin/password/reset', 'Auth\ResetPasswordController@reset')->name('admin.password.update');
-        Route::GET('admin/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('admin.password.reset');
+        Route::GET('admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class,'showLoginForm'])->name('admin.login');
+        Route::POST('admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'login']);
+        Route::POST('admin/logout', [App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
+        Route::GET('admin/password/confirm', [App\Http\Controllers\Admin\Auth\ConfirmPasswordController::class, 'showConfirmForm'])->name('admin.password.confirm');
+        Route::POST('admin/password/confirm', [App\Http\Controllers\Admin\Auth\ConfirmPasswordController::class, 'confirm']);
+        Route::POST('admin/password/email', [App\Http\Controllers\Admin\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+        Route::GET('admin/password/reset', [App\Http\Controllers\Admin\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('admin.password.request');
+        Route::POST('admin/password/reset', [App\Http\Controllers\Admin\Auth\ResetPasswordController::class, 'reset'])->name('admin.password.update');
+        Route::GET('admin/password/reset/{token}', [App\Http\Controllers\Admin\Auth\ResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
     });
 
     Route::group(
@@ -159,6 +159,89 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
         Route::POST('client/password/reset', [App\Http\Controllers\Client\Auth\LoginController::class, 'reset'])->name('client.password.update');
         Route::GET('client/password/reset/{token}', [App\Http\Controllers\Client\Auth\LoginController::class, 'showResetForm'])->name('client.password.reset');
     });
+    Route::group(
+        [
+            'middleware' => ['auth:admin-web'],
+            'prefix' => 'admin',
+            
+        ],
+        function () {
+            Route::get('/',  [App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm']);
+            Route::get('/home', [App\Http\Controllers\Admin\HomeController::class, 'index'])->name('admin.home');
+
+            Route::get('profile/edit/{id}', [App\Http\Controllers\Admin\AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+            Route::patch('profile/edit/{id}', [App\Http\Controllers\Admin\AdminProfileController::class, 'update'])->name('admin.profile.update');
+            Route::patch('profile/store/{id}',  [App\Http\Controllers\Admin\AdminProfileController::class, 'store'])->name('admin.profile.store');
+
+            Route::get('intro', [App\Http\Controllers\Admin\HomeController::class, 'intro_movie'])->name('intro');
+            Route::post('intro-movie-post', [App\Http\Controllers\Admin\HomeController::class, 'intro_movie_post'])->name('admin.intro.movie.post');
+
+            Route::get('/social-links', [App\Http\Controllers\Admin\HomeController::class, 'social_links'])->name('social.links');
+            Route::post('/update-social-links', [App\Http\Controllers\Admin\HomeController::class, 'update_social_links'])->name('update.social.links');
+
+            // Contacts Routes
+            Route::resource('contacts', App\Http\Controllers\Admin\ContactController::class)->names([
+                'index' => 'admin.contacts.index',
+                'show' => 'admin.contacts.show',
+                'destroy' => 'admin.contacts.destroy'
+            ]);
+            // types Routes
+            Route::resource('types', TypeController::class)->names([
+                'index' => 'admin.types.index',
+                'create' => 'admin.types.create',
+                'update' => 'admin.types.update',
+                'destroy' => 'admin.types.destroy',
+                'edit' => 'admin.types.edit',
+                'store' => 'admin.types.store',
+            ]);
+
+            // Companies Routes
+            Route::resource('companies', CompanyController::class)->names([
+                'index' => 'admin.companies.index',
+                'update' => 'admin.companies.update',
+                'edit' => 'admin.companies.edit',
+                'destroy' => 'admin.companies.destroy',
+            ]);
+            // payments Routes
+            Route::resource('payments', PaymentController::class)->names([
+                'index' => 'admin.payments.index',
+                'create' => 'admin.payments.create',
+                'update' => 'admin.payments.update',
+                'destroy' => 'admin.payments.destroy',
+                'edit' => 'admin.payments.edit',
+                'store' => 'admin.payments.store',
+            ]);
+            Route::get('payments-report-get', [PaymentController::class, 'get_report'])->name('payments.report.get');
+
+            Route::resource('packages', PackageController::class)->names([
+                'index' => 'admin.packages.index',
+                'create' => 'admin.packages.create',
+                'update' => 'admin.packages.update',
+                'destroy' => 'admin.packages.destroy',
+                'edit' => 'admin.packages.edit',
+                'store' => 'admin.packages.store',
+            ]);
+
+            // subscriptions Routes
+            Route::resource('subscriptions', SubscriptionController::class)->names([
+                'index' => 'admin.subscriptions.index',
+                'create' => 'admin.subscriptions.create',
+                'update' => 'admin.subscriptions.update',
+                'destroy' => 'admin.subscriptions.destroy',
+                'edit' => 'admin.subscriptions.edit',
+                'store' => 'admin.subscriptions.store',
+            ]);
+            Route::get('subscriptions-filter-get', [SubscriptionController::class, 'get_filter'])->name('subscriptions.filter.get');
+            Route::post('subscriptions-filter-post', [SubscriptionController::class, 'post_filter'])->name('subscriptions.filter.post');
+
+
+            Route::patch('contacts-make-as-read', [App\Http\Controllers\Admin\ContactController::class, 'makeAsRead'])->name('admin.contacts.make.as.read');
+            Route::patch('contacts-make-as-important', [App\Http\Controllers\Admin\ContactController::class, 'makeAsImportant'])->name('admin.contacts.make.as.important');
+            Route::patch('contacts-make-as-destroy', [App\Http\Controllers\Admin\ContactController::class, 'makeAsDestroy'])->name('admin.contacts.make.as.destroy');
+            Route::patch('contacts-print', [App\Http\Controllers\Admin\ContactController::class, 'print'])->name('admin.contacts.print');
+            Route::get('contacts-important', [App\Http\Controllers\Admin\ContactController::class, 'showImportant'])->name('admin.contacts.important');
+        }
+    );
 
     Route::group(
         ['middleware' => ['auth:client-web', CheckStatus::class],
@@ -904,93 +987,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::post('/clients-store-cash-clients-pos', [PosController::class, 'store_cash_clients'])
             ->name('client.store.cash.clients.pos');
 
-            Route::group(
-                [
-                    'middleware' => ['auth:admin-web'],
-                    'prefix' => 'admin',
-                    'namespace' => 'Admin'
-                ],
-                function () {
-                    Route::get('/', 'Auth\LoginController@showLoginForm');
-                    Route::get('/home', 'HomeController@index')->name('admin.home');
-
-                    Route::get('profile/edit/{id}', 'AdminProfileController@edit')->name('admin.profile.edit');
-                    Route::patch('profile/edit/{id}', 'AdminProfileController@update')->name('admin.profile.update');
-                    Route::patch('profile/store/{id}', 'AdminProfileController@store')->name('admin.profile.store');
-
-                    Route::get('intro', 'HomeController@intro_movie')->name('intro');
-                    Route::post('intro-movie-post', 'HomeController@intro_movie_post')->name('admin.intro.movie.post');
-
-                    Route::get('/social-links', 'HomeController@social_links')->name('social.links');
-                    Route::post('/update-social-links', 'HomeController@update_social_links')->name('update.social.links');
-
-                    // Contacts Routes
-                    Route::resource('contacts', ContactController::class)->names([
-                        'index' => 'admin.contacts.index',
-                        'show' => 'admin.contacts.show',
-                        'destroy' => 'admin.contacts.destroy'
-                    ]);
-                    Route::patch('contacts-make-as-read', [ContactController::class, 'makeAsRead'])->name('admin.contacts.make.as.read');
-                    Route::patch('contacts-make-as-important', [ContactController::class, 'makeAsImportant'])->name('admin.contacts.make.as.important');
-                    Route::patch('contacts-make-as-destroy', [ContactController::class, 'makeAsDestroy'])->name('admin.contacts.make.as.destroy');
-                    Route::patch('contacts-print', [ContactController::class, 'print'])->name('admin.contacts.print');
-                    Route::get('contacts-important', [ContactController::class, 'showImportant'])->name('admin.contacts.important');
-                }
-            );
-
-            // Companies Routes
-            Route::resource('companies', CompanyController::class)->names([
-                'index' => 'admin.companies.index',
-                'update' => 'admin.companies.update',
-                'edit' => 'admin.companies.edit',
-                'destroy' => 'admin.companies.destroy',
-            ]);
+            
+          
 
 
-            // subscriptions Routes
-            Route::resource('subscriptions', SubscriptionController::class)->names([
-                'index' => 'admin.subscriptions.index',
-                'create' => 'admin.subscriptions.create',
-                'update' => 'admin.subscriptions.update',
-                'destroy' => 'admin.subscriptions.destroy',
-                'edit' => 'admin.subscriptions.edit',
-                'store' => 'admin.subscriptions.store',
-            ]);
-            Route::get('subscriptions-filter-get', [SubscriptionController::class, 'get_filter'])->name('subscriptions.filter.get');
-            Route::post('subscriptions-filter-post', [SubscriptionController::class, 'post_filter'])->name('subscriptions.filter.post');
 
-
-            // types Routes
-            Route::resource('types', TypeController::class)->names([
-                'index' => 'admin.types.index',
-                'create' => 'admin.types.create',
-                'update' => 'admin.types.update',
-                'destroy' => 'admin.types.destroy',
-                'edit' => 'admin.types.edit',
-                'store' => 'admin.types.store',
-            ]);
-
-            // payments Routes
-            Route::resource('payments', PaymentController::class)->names([
-                'index' => 'admin.payments.index',
-                'create' => 'admin.payments.create',
-                'update' => 'admin.payments.update',
-                'destroy' => 'admin.payments.destroy',
-                'edit' => 'admin.payments.edit',
-                'store' => 'admin.payments.store',
-            ]);
-            Route::get('payments-report-get', [PaymentController::class, 'get_report'])->name('payments.report.get');
-
-            // payments Routes
-            Route::resource('packages', PackageController::class)->names([
-                'index' => 'admin.packages.index',
-                'create' => 'admin.packages.create',
-                'update' => 'admin.packages.update',
-                'destroy' => 'admin.packages.destroy',
-                'edit' => 'admin.packages.edit',
-                'store' => 'admin.packages.store',
-            ]);
-
+            
+          
+           
     });
 });
 

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Capital;
-use App\Models\Category;
-use App\Models\Company;
-
 use App\Models\Safe;
+use App\Models\Capital;
+use App\Models\Company;
+use App\Models\Category;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CapitalRequest;
 
 
 class CapitalController extends Controller
@@ -30,12 +31,8 @@ class CapitalController extends Controller
         return view('client.capitals.create', compact('company_id', 'safes', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(CapitalRequest  $request)
     {
-        $this->validate($request, [
-            'amount' => 'required',
-            'safe_id' => 'required'
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $amount = $data['amount'];
@@ -64,12 +61,9 @@ class CapitalController extends Controller
         return view('client.capitals.edit', compact('capital', 'company_id','safes', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CapitalRequest  $request, $id)
     {
-        $this->validate($request, [
-            'amount' => 'required',
-            'safe_id' => 'required'
-        ]);
+        
         $data = $request->all();
 
         // Return the old values before the operation

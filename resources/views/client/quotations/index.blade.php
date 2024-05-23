@@ -106,13 +106,13 @@
                                 class="defaultTableMain table dataTable"
                                 id="example-table" role="grid">
                                 <thead class="text-center">
-                                <th style="border-radius: 0px 11px 0 0;">رقم الفاتورة</th>
-                                <th>اسم العميل</th>
-                                <th>تاريخ بداية العرض</th>
-                                <th>تاريخ نهاية العرض</th>
-                                <th>الاجمالى</th>
-                                <th>اجمالي العناصر</th>
-                                <th style="width: 15% !important;border-radius: 11px 0 0 0;">التحكم</th>
+                                <th style="border-radius: 0px 11px 0 0;">@lang('sales_bills.invoice number')</th>
+                                <th>@lang('sales_bills.client-name')</th>
+                                <th>@lang('sales_bills.Start Date')</th>
+                                <th>@lang('sales_bills.Expiry date')</th>
+                                <th>@lang('sales_bills.total')</th>
+                                <th> @lang('sales_bills.Total items')</th>
+                                <th style="width: 15% !important;border-radius: 11px 0 0 0;">@lang('sales_bills.control')</th>
                                 </thead>
                                 <tbody>
                                 <?php $i = 0; $total = 0; ?>
@@ -255,7 +255,7 @@
                             </table>
                             <div class="mt-3 mb-2">
                                 <span class="badge badge-success p-1 font-weight-bold">
-                                    اجمالى اسعار كل العروض
+                                   @lang('sales_bills.Total prices of all offers') 
                                     ( {{ floatval($total) }} ) {{ $currency }}
                                 </span>
                             </div>

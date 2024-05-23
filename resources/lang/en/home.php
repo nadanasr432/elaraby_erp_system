@@ -60,4 +60,8 @@ return [
     "Register a payment from a customer"=>"Register a payment from a customer",
     "New"=>"New",
     "technical support"=>"technical support",
+    "Messages"=> "Messages",
+    "There are no current messages!" => "There are no current messages!",
+    "Notifications" => "Notifications",
+    "No notifications yet!" => "No notifications yet!",
 ];

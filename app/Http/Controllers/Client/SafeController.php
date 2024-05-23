@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Safe;
 use App\Models\Branch;
 use App\Models\Company;
-use App\Models\Safe;
 use App\Models\SafeTransfer;
 use Illuminate\Http\Request;
+use App\Http\Requests\SafeRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -29,15 +30,8 @@ class SafeController extends Controller
         return view('client.safes.create', compact('company_id', 'branches', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(SafeRequest  $request)
     {
-        $this->validate($request, [
-            'safe_name' => 'required',
-            'branch_id' => 'required',
-            'balance' => 'required',
-            'type' => 'required',
-
-        ]);
         $data = $request->all();
         $safe = safe::create($data);
         return redirect()->route('client.safes.index')
@@ -53,14 +47,8 @@ class SafeController extends Controller
         return view('client.safes.edit', compact('safe', 'branches', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(SafeRequest  $request, $id)
     {
-        $this->validate($request, [
-            'safe_name' => 'required',
-            'branch_id' => 'required',
-            'balance' => 'required',
-            'type' => 'required',
-        ]);
         $input = $request->all();
         $safe = safe::findOrFail($id);
         $safe->update($input);

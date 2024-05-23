@@ -7,6 +7,9 @@ use App\Models\AdminProfile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreAdminProfileRequest;
+use App\Http\Requests\UpdateAdminProfileRequest;
+
 class AdminProfileController extends Controller
 {
     /**
@@ -27,13 +30,8 @@ class AdminProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, $id)
+    public function store(StoreAdminProfileRequest $request, $id)
     {
-        $this->validate($request, [
-            'city_name' => 'required',
-            'age' => 'required',
-            'gender' => 'required'
-        ]);
         $input = $request->all();
         $user = Admin::findOrFail($id);
         $profile = AdminProfile::where('admin_id', $id)->first();
@@ -71,13 +69,8 @@ class AdminProfileController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateAdminProfileRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'same:confirm-password'
-        ]);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);

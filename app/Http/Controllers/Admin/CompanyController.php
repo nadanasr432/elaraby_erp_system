@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateCompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -16,12 +17,8 @@ class CompanyController extends Controller
         $company = Company::FindOrFail($id);
         return view('admin.companies.edit',compact('company'));
     }
-    public function update(Request $request, $id)
+    public function update(UpdateCompanyRequest  $request, $id)
     {
-        $this->validate($request, [
-            'company_name' => 'required',
-            'status' => 'required',
-        ]);
         $input = $request->all();
         $company = Company::findOrFail($id);
         $company->update($input);

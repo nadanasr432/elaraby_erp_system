@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\accounting_tree;
-use App\Models\BankBuyCash;
-use App\Models\BankCash;
-use App\Models\BuyBill;
-use App\Models\BuyBillReturn;
-use App\Models\BuyCash;
 use App\Models\Cash;
+use App\Models\Gift;
 use App\Models\Client;
+use App\Models\BuyBill;
+use App\Models\BuyCash;
 use App\Models\Company;
 use App\Models\Expense;
-use App\Models\ExtraSettings;
-use App\Models\Gift;
 use App\Models\PosOpen;
-use App\Models\Quotation;
+use App\Models\BankCash;
 use App\Models\SaleBill;
-use App\Models\SaleBillReturn;
+use App\Models\Quotation;
+use App\Models\BankBuyCash;
 use Illuminate\Http\Request;
+use App\Models\BuyBillReturn;
+use App\Models\ExtraSettings;
+use App\Models\SaleBillReturn;
+use App\Models\accounting_tree;
+use App\Http\Requests\DailyRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -170,16 +171,10 @@ class DailyController extends Controller
         return view('client.accounting_tree.index', compact('parent_id', 'id', 'categories', 'allCategories', 'main_1'));
     }
 
-    public function accounting_tree_store(Request $request)
+    public function accounting_tree_store(DailyRequest  $request)
     {
 
-        $request->validate([
-            'type' => 'required'
-        ]);
-
         $account_type = $request->account_type;
-
-
         if ($account_type == 'أصول') {
             $last_year_amount = 0.00;
             $debit_balance = -64.00;

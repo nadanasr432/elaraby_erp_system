@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Supplier;
-use App\Models\SupplierAddress;
+use App\Models\TimeZone;
 use App\Models\SupplierNote;
+use Illuminate\Http\Request;
 use App\Models\SupplierPhone;
 
-use App\Models\TimeZone;
-use Illuminate\Http\Request;
+use App\Models\SupplierAddress;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SupplierRequest;
 
 class SupplierController extends Controller
 {
@@ -56,13 +57,8 @@ class SupplierController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(SupplierRequest  $request)
     {
-        $this->validate($request, [
-            'supplier_name' => 'required',
-            'supplier_category' => 'required',
-            'prev_balance' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $balance = $request->balance;
@@ -115,13 +111,8 @@ class SupplierController extends Controller
         return view('client.suppliers.edit', compact('timezones', 'supplier', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(SupplierRequest  $request, $id)
     {
-        $this->validate($request, [
-            'supplier_name' => 'required',
-            'supplier_category' => 'required',
-            'prev_balance' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $supplier = Supplier::FindOrFail($id);

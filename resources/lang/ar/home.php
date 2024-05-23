@@ -60,4 +60,8 @@ return [
     "Register a payment from a customer"=>"تسجيل دفعة من عميل",
     "New"=>"جديد",
     "technical support"=>"الدعم الفني",
+    "Messages"=> "الرسائل",
+    "There are no current messages!"=> "لا يوجد رسائل حالية!",
+    "Notifications"=> "الإشعارات",
+    "No notifications yet!"=> " لا يوجد اشعارات حتي الان!",
 ];

@@ -47,8 +47,9 @@
                 <!------HEADER----->
                 <div class="card-body p-2">
                     <form class="parsley-style-1" id="selectForm2" name="selectForm2"
-                          action="{{ route('client.products.store', 'test') }}" enctype="multipart/form-data"
-                          method="post">
+                        action="{{ route('client.products.update', $product->id) }}" enctype="multipart/form-data"
+                        method="POST">
+                        @method('PUT')
                         {{ csrf_field() }}
                         <input type="hidden" name="company_id" value="{{ $company_id }}">
                         <div class="alert alert-danger" id="showErrMsg" style="display:none">

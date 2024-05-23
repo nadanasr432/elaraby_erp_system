@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Mail\sendingBuyBill;
 use App\Models\Bank;
-use App\Models\BankBuyCash;
-use App\Models\BankCash;
-use App\Models\BuyBillReturn;
-use App\Models\BuyCash;
 use App\Models\Cash;
-use App\Models\Company;
-use App\Models\ExtraSettings;
-use App\Models\Supplier;
-
-use App\Models\Product;
 use App\Models\Safe;
 use App\Models\BuyBill;
-use App\Models\BuyBillElement;
+use App\Models\BuyCash;
+use App\Models\Company;
+use App\Models\Product;
+use App\Models\BankCash;
+use App\Models\Supplier;
+use App\Models\BankBuyCash;
+use App\Mail\sendingBuyBill;
+
 use App\Models\BuyBillExtra;
 use Illuminate\Http\Request;
+use App\Models\BuyBillReturn;
+use App\Models\ExtraSettings;
+use App\Models\BuyBillElement;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\CashPaymentRequest;
 
 class BuyBillController extends Controller
 {
@@ -118,15 +119,8 @@ class BuyBillController extends Controller
         }
     }
 
-    public function store_cash_suppliers(Request $request)
+    public function store_cash_suppliers(CashPaymentRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -1364,8 +1358,9 @@ class BuyBillController extends Controller
 
     public function update_element(Request $request)
     {
-        $element_id = $request->element_id;
-        $element = BuyBillElement::FindOrFail($element_id);
+        $elementId = $request->element_id;
+        $element = BuyBillElement::findOrFail($elementId);
+
         $element->update([
             'unit_id' => $request->unit_id,
             'product_id' => $request->product_id,
@@ -1373,25 +1368,25 @@ class BuyBillController extends Controller
             'quantity_price' => $request->quantity_price,
             'product_price' => $request->product_price,
         ]);
+
+        return response()->json(['message' => 'Element updated successfully']);
     }
 
     public function edit_element(Request $request)
     {
-        $element = BuyBillElement::FindOrFail($request->element_id);
-        $product_id = $element->product_id;
-        $product_price = $element->product_price;
-        $quantity = $element->quantity;
-        $quantity_price = $element->quantity_price;
-        $unit_id = $element->unit_id;
+        $elementId = $request->element_id;
+        $element = BuyBillElement::findOrFail($elementId);
+
         return response()->json([
-            'product_id' => $product_id,
-            'product_price' => $product_price,
-            'quantity' => $quantity,
-            'quantity_price' => $quantity_price,
-            'unit_id' => $unit_id,
+            'product_id' => $element->product_id,
+            'product_price' => $element->product_price,
+            'quantity' => $element->quantity,
+            'quantity_price' => $element->quantity_price,
+            'unit_id' => $element->unit_id,
         ]);
     }
 
+
 }
 
-?>
+

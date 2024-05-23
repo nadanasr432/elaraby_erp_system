@@ -35,7 +35,7 @@ class LoginController extends Controller
     {
         return $request->wantsJson()
             ? new Response('', 204)
-            : redirect('/admin');
+            : redirect('/admin/login');
     }
     protected function guard()
     {
@@ -58,14 +58,11 @@ class LoginController extends Controller
     {
         if (Auth::guard('admin-web')->check()) {
             return redirect()->route('admin.home');
-        }
-        elseif (Auth::guard('client-web')->check()) {
+        } elseif (Auth::guard('client-web')->check()) {
             return redirect()->route('client.home');
-        }
-        elseif (Auth::guard('web')->check()) {
+        } elseif (Auth::guard('web')->check()) {
             return redirect()->route('home');
-        }
-        else{
+        } else {
             return view('admin.auth.login');
         }
     }

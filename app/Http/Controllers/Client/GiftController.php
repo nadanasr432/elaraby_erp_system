@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Company;
 use App\Models\Gift;
-use App\Models\OuterClient;
-
-use App\Models\Product;
 use App\Models\Store;
+use App\Models\Company;
+use App\Models\Product;
+use App\Models\Category;
+
+use App\Models\OuterClient;
 use Illuminate\Http\Request;
+use App\Http\Requests\GiftRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -34,14 +35,8 @@ class GiftController extends Controller
         return view('client.gifts.create', compact('company_id', 'stores','products','outer_clients', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(GiftRequest  $request)
     {
-        $this->validate($request, [
-            'outer_client_id' => 'required',
-            'store_id' => 'required',
-            'product_id' => 'required',
-            'amount' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -72,14 +67,8 @@ class GiftController extends Controller
         return view('client.gifts.edit', compact('gift', 'company_id', 'company','stores','products','outer_clients'));
     }
 
-    public function update(Request $request, $id)
+    public function update(GiftRequest  $request, $id)
     {
-        $this->validate($request, [
-            'outer_client_id' => 'required',
-            'store_id' => 'required',
-            'product_id' => 'required',
-            'amount' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;

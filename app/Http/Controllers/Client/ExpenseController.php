@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Safe;
 use App\Models\Company;
-use App\Models\Employee;
 use App\Models\Expense;
+use App\Models\Employee;
 use App\Models\FixedExpense;
 
-use App\Models\Safe;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ExpenseRequest;
+use App\Http\Requests\FixedExpenseRequest;
 
 
 class ExpenseController extends Controller
@@ -21,10 +23,7 @@ class ExpenseController extends Controller
         $fixed_expenses = FixedExpense::where('company_id',$company_id)->get();
         return view('client.expenses.fixed', compact('company', 'company_id', 'fixed_expenses'));
     }
-    public function fixed_expenses_store(Request $request){
-        $this->validate($request, [
-            'fixed_expense' => 'required'
-        ]);
+    public function fixed_expenses_store(FixedExpenseRequest $request){
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -40,11 +39,8 @@ class ExpenseController extends Controller
         $fixed_expense = FixedExpense::findOrFail($id);
         return view('client.expenses.fixed_edit', compact('fixed_expense', 'company_id', 'company'));
     }
-    public function fixed_expenses_update(Request $request, $id)
+    public function fixed_expenses_update(FixedExpenseRequest $request, $id)
     {
-        $this->validate($request, [
-            'fixed_expense' => 'required'
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -86,15 +82,8 @@ class ExpenseController extends Controller
         return view('client.expenses.create', compact('company_id','employees','safes','fixed_expenses', 'pre_expenses', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(ExpenseRequest $request)
     {
-        $this->validate($request, [
-            'expense_number' => 'required',
-            'fixed_expense' => 'required',
-            'expense_details' => 'required',
-            'amount' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -129,15 +118,8 @@ class ExpenseController extends Controller
         return view('client.expenses.edit', compact('expense','employees','fixed_expenses','safes', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ExpenseRequest $request, $id)
     {
-        $this->validate($request, [
-            'expense_number' => 'required',
-            'fixed_expense' => 'required',
-            'expense_details' => 'required',
-            'amount' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;

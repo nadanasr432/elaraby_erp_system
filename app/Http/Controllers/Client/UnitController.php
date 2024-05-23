@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Requests\UnitRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,11 +25,8 @@ class UnitController extends Controller
         return view('client.units.create',compact('company_id','company'));
     }
 
-    public function store(Request $request)
+    public function store(UnitRequest  $request)
     {
-        $this->validate($request, [
-            'unit_name' => 'required',
-        ]);
         $data = $request->all();
         $unit = Unit::create($data);
         return redirect()->route('client.units.index')
@@ -42,11 +40,8 @@ class UnitController extends Controller
         $unit = Unit::findOrFail($id);
         return view('client.units.edit', compact('unit', 'company_id', 'company'));
     }
-    public function update(Request $request, $id)
+    public function update(UnitRequest  $request, $id)
     {
-        $this->validate($request, [
-            'unit_name' => 'required',
-        ]);
         $input = $request->all();
         $unit = Unit::findOrFail($id);
         $unit->update($input);

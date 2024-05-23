@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Company;
-use App\Models\OuterClient;
-use App\Models\OuterClientAddress;
-use App\Models\OuterClientNote;
-use App\Models\OuterClientPhone;
-
 use App\Models\TimeZone;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Type\Time;
+use App\Models\OuterClient;
+use Illuminate\Http\Request;
+use App\Models\OuterClientNote;
+
+use App\Models\OuterClientPhone;
+use App\Models\OuterClientAddress;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\OuterClientRequest;
 
 
 class OuterClientController extends Controller
@@ -156,13 +157,8 @@ class OuterClientController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(OuterClientRequest  $request)
     {
-        $this->validate($request, [
-            'client_name' => 'required',
-            'client_category' => 'required',
-            'prev_balance' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $balance = $request->balance;
@@ -225,13 +221,8 @@ class OuterClientController extends Controller
         return view('client.outer_clients.edit', compact('timezones','clients', 'outer_client', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(OuterClientRequest  $request, $id)
     {
-        $this->validate($request, [
-            'client_name' => 'required',
-            'client_category' => 'required',
-            'prev_balance' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $balance = $request->balance;

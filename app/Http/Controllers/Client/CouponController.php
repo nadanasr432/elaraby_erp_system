@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CouponCode;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CouponRequest;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -27,16 +28,10 @@ class CouponController extends Controller
         return view('client.coupons.create',compact('company_id','categories','products','outer_clients','company'));
     }
 
-    public function store(Request $request)
+    public function store(CouponRequest $request)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'coupon_code' => 'required',
-            'coupon_value' => 'required',
-            'coupon_expired' => 'required',
-            'dept' => 'required',
-        ]);
         $data = $request->all();
         $data['client_id'] = Auth::user()->id;
         $coupon = CouponCode::create($data);
@@ -54,16 +49,10 @@ class CouponController extends Controller
         $products = $company->products;
         return view('client.coupons.edit', compact('coupon', 'categories','products','company_id','outer_clients', 'company'));
     }
-    public function update(Request $request, $id)
+    public function update(CouponRequest $request, $id)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'coupon_code' => 'required',
-            'coupon_value' => 'required',
-            'coupon_expired' => 'required',
-            'dept' => 'required',
-        ]);
         $data = $request->all();
         $data['client_id'] = Auth::user()->id;
         $coupon = CouponCode::findOrFail($id);

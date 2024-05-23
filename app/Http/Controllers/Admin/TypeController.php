@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Package;
 use App\Models\Type;
+use App\Models\Package;
 use Illuminate\Http\Request;
+use App\Http\Requests\TypeRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class TypeController extends Controller
@@ -21,14 +22,8 @@ class TypeController extends Controller
         return view('admin.types.create',compact('packages'));
     }
 
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
-        $this->validate($request, [
-            'type_name' => 'required',
-            'type_price' => 'required',
-            'period' => 'required',
-            'package_id' => 'required'
-        ]);
         $data = $request->all();
         $type = Type::create($data);
         return redirect()->route('admin.types.index')
@@ -41,14 +36,8 @@ class TypeController extends Controller
         $packages = Package::all();
         return view('admin.types.edit', compact('type','packages'));
     }
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request, $id)
     {
-        $this->validate($request, [
-            'type_name' => 'required',
-            'type_price' => 'required',
-            'period' => 'required',
-            'package_id' => 'required',
-        ]);
         $input = $request->all();
         $type = Type::findOrFail($id);
         $type->update($input);

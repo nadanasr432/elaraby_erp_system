@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Store;
 use App\Models\Branch;
-use App\Models\BuyBillElement;
 use App\Models\Company;
 use App\Models\Product;
-use App\Models\SaleBillElement;
-use App\Models\Store;
-use App\Models\StoreTransfer;
 use Illuminate\Http\Request;
+use App\Models\StoreTransfer;
+use App\Models\BuyBillElement;
+use App\Models\SaleBillElement;
+use App\Http\Requests\StoreRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -32,12 +33,8 @@ class StoreController extends Controller
         return view('client.stores.create', compact('company_id', 'branches', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $this->validate($request, [
-            'store_name' => 'required',
-            'branch_id' => 'required',
-        ]);
         $data = $request->all();
         $store = Store::create($data);
         return redirect()->route('client.stores.index')
@@ -53,12 +50,8 @@ class StoreController extends Controller
         return view('client.stores.edit', compact('store', 'branches', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreRequest $request, $id)
     {
-        $this->validate($request, [
-            'store_name' => 'required',
-            'branch_id' => 'required',
-        ]);
         $input = $request->all();
         $store = Store::findOrFail($id);
         $store->update($input);

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Subscription;
-use App\Models\Type;
 use DateTime;
+use App\Models\Type;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateSubscriptionRequest;
 
 class SubscriptionController extends Controller
 {
@@ -23,14 +24,8 @@ class SubscriptionController extends Controller
         return view('admin.subscriptions.edit', compact('subscription','types'));
     }
 //
-    public function update(Request $request, $id)
+    public function update(UpdateSubscriptionRequest $request, $id)
     {
-        $this->validate($request, [
-            'company_id' => 'required',
-            'type_id' => 'required',
-            'start_date' => 'required',
-            'status' => 'required',
-        ]);
         $input = $request->all();
         $subscription = Subscription::findOrFail($id);
         $type_id = $request->type_id;

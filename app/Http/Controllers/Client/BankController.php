@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Bank;
-use App\Models\BankModification;
-use App\Models\BankProcess;
-use App\Models\BankSafeTransfer;
-use App\Models\BankTransfer;
-use App\Models\Company;
 use App\Models\Safe;
-use App\Models\SafeBankTransfer;
+use App\Models\Company;
+use App\Models\BankProcess;
+use App\Models\BankTransfer;
 use Illuminate\Http\Request;
+use App\Models\BankModification;
+use App\Models\BankSafeTransfer;
+use App\Models\SafeBankTransfer;
+use App\Http\Requests\BankRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class BankController extends Controller
@@ -31,17 +32,13 @@ class BankController extends Controller
         return view('client.banks.create', compact('company_id', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(BankRequest $request)
     {
-        $this->validate($request, [
-            'bank_name' => 'required',
-            'bank_balance' => 'required',
-        ]);
-        $data = $request->all();
+        $data = $request->all(); 
         $company_id = $data['company_id'];
         $bank = Bank::create($data);
         return redirect()->route('client.banks.index')
-            ->with('success', 'تم اضافة البنك بنجاح');
+        ->with('success', 'تم اضافة البنك بنجاح');
     }
 
     public function edit($id)
@@ -52,16 +49,12 @@ class BankController extends Controller
         return view('client.banks.edit', compact('bank', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(BankRequest  $request, $id)
     {
-        $this->validate($request, [
-            'bank_name' => 'required',
-            'bank_balance' => 'required',
-        ]);
-        $input = $request->all();
+        $data = $request->validated(); 
         $bank = Bank::findOrFail($id);
         $balance_before = $bank->bank_balance;
-        $bank->update($input);
+        $bank->update($data);
         $balance_after = $request->bank_balance;
         BankModification::create([
             'company_id' => $request->company_id,
@@ -72,7 +65,7 @@ class BankController extends Controller
             'balance_after' => $balance_after,
         ]);
         return redirect()->route('client.banks.index')
-            ->with('success', 'تم تعديل بيانات البنك بنجاح');
+        ->with('success', 'تم تعديل بيانات البنك بنجاح');
     }
 
     public function destroy(Request $request)

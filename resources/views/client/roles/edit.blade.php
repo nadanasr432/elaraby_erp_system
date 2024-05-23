@@ -103,7 +103,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'branch' || $value->key == 'store' || $value->key == 'safe')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -116,7 +116,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'category' || $value->key == 'product')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -128,7 +128,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'outer_client' || $value->key == 'supplier')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -140,7 +140,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'bank' || $value->key == 'expense')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -153,7 +153,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'cash' || $value->key == 'capital' || $value->key == 'payments')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -165,7 +165,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'gifts' || $value->key == 'email')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -178,7 +178,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'quotation' || $value->key == 'sale_bill')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -192,7 +192,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'buy_bill')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -206,7 +206,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'summary' || $value->key == 'daily')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>
@@ -219,7 +219,7 @@
                                     @foreach ($permission as $value)
                                         @if ($value->key == 'reports' || $value->key == 'privilege' || $value->key == 'settings')
                                             <label style="font-size: 16px;">
-                                                {{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, ['class' => 'name']) }}
+                                             <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}> <input type="checkbox" name="permission[]" value="{{ $value->id }}" class="name" {{ in_array($value->id, $rolePermissions) ? 'checked' : '' }}>
                                                 {{ $value->name }}
                                             </label>
                                             <br>

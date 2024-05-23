@@ -589,7 +589,7 @@ class PosController extends Controller
                 ->get();
         }
         foreach ($products as $product) {
-            $img = $product->product_pic ? $product->product_pic : 'assets/images/noprod.png';
+            $img = $product->product_pic ? $product->product_pic : 'images/noprod.png';
 
             echo '
             <div class="card cproduct m-nos product" product_id="' . $product->id . '" product_name="' . $product->product_name . '" product_price="' . $product->wholesale_price . '"
@@ -660,7 +660,7 @@ class PosController extends Controller
                     })->get();
             }
             foreach ($products as $product) {
-                $img = $product->product_pic ? $product->product_pic : 'assets/images/noprod.png';
+                $img = $product->product_pic ? $product->product_pic : 'images/noprod.png';
                 echo '
             <div class="card cproduct m-nos product" product_id="' . $product->id . '" product_name="' . $product->product_name . '" product_price="' . $product->wholesale_price . '"
                  style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important; border: 1px solid rgba(229, 229, 229, 0.4) !important; min-height: 172px !important; max-height: 172px !important; width: 12rem !important;margin-bottom: 5px !important;">
@@ -708,7 +708,7 @@ class PosController extends Controller
                 }
             }
             foreach ($products as $product) {
-                $img = $product->product_pic ? $product->product_pic : 'assets/images/noprod.png';
+                $img = $product->product_pic ? $product->product_pic : 'images/noprod.png';
 
                 echo '
             <div class="card cproduct m-nos product" product_id="' . $product->id . '" product_name="' . $product->product_name . '" product_price="' . $product->wholesale_price . '"
@@ -1323,6 +1323,8 @@ class PosController extends Controller
     {
         $pos = PosOpen::FindOrFail($pos_id);
         $clientID = $pos->client_id;
+        $company_id = $pos->company_id;
+        $company = Company::FindOrFail($company_id);
         $branchID = Client::findOrFail($clientID);
         $branchID = $branchID->branch_id;
         if ($branchID) {
@@ -1335,7 +1337,7 @@ class PosController extends Controller
         }
 
         $posSettings = PosSetting::where("company_id", $pos->company_id)->first();
-        return view('client.pos.print2', compact('pos', 'posSettings', 'branch_address', 'branch_phone'));
+        return view('client.pos.print2', compact('company','pos', 'posSettings', 'branch_address', 'branch_phone'));
     }
 
     //pos_sales for main table-main page...

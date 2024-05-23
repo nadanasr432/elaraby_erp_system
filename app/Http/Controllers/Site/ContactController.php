@@ -2,24 +2,15 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SendMessageRequest;
 
 class ContactController extends Controller
 {
-    public function send_message(Request $request)
+    public function send_message(SendMessageRequest  $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'phone' =>
-                array(
-                    'required',
-                    'regex:/(01)[0|1|2|5][0-9]{8}/'
-                ),
-            'subject' => 'required',
-            'message' => 'required'
-        ]);
         Contact::create($request->all());
         return redirect()->back()->with('success','تم ارسال رسالتك الى الادارة');
     }

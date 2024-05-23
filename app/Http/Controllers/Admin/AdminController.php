@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\AdminProfile;
-use Spatie\Permission\Models\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use App\Http\Requests\AdminRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -52,15 +53,8 @@ class AdminController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AdminRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|same:confirm-password',
-            'role_name' => 'required'
-        ]);
-
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $admin = Admin::create($input);
@@ -96,14 +90,8 @@ class AdminController extends Controller
         $adminRole = $admin->roles->pluck('name', 'name')->all();
         return view('admin.admins.edit', compact('admin', 'roles', 'adminRole'));
     }
-    public function update(Request $request, $id)
+    public function update(AdminRequest $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'same:confirm-password',
-            'role_name' => 'required'
-        ]);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);

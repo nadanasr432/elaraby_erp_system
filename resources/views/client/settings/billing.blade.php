@@ -33,7 +33,6 @@
         border-top-right-radius: 5px !important;
         border-bottom-right-radius: 5px !important;
     }
-
 </style>
 @section('content')
     @if (session('success'))
@@ -71,7 +70,9 @@
                             <div class="form-group">
                                 <label for="tax_number">الرقم الضريبى</label>
                                 <input style="width:100%" type="text" class="form-control" dir="ltr"
-                                    value="{{ $company->tax_number }}" name="tax_number" id="tax_number" />
+                                    name="tax_number" id="tax_number"
+                                    @if ($company->tax_number) value="{{ $company->tax_number }}" 
+                                        disabled @endif />
                             </div>
                         </div>
                         <div class="col-lg-4 col-xs-12 pull-right">

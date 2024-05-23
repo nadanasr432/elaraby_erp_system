@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Bank;
-use App\Models\BankCash;
-use App\Models\BuyCash;
 use App\Models\Cash;
-use App\Models\Company;
-use App\Models\OuterClient;
-
 use App\Models\Safe;
+use App\Models\BuyCash;
+use App\Models\Company;
+use App\Models\BankCash;
 use App\Models\Supplier;
+
+use App\Models\OuterClient;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CashClientsRequest;
+use App\Http\Requests\CashSuppliersRequest;
 
 
 class CashController extends Controller
@@ -96,16 +98,8 @@ class CashController extends Controller
         return view('client.finances.paymentsborrow.clients', compact('company_id', 'cashs', 'company'));
     }
 
-    public function store_cash_clients(Request $request)
+    public function store_cash_clients(CashClientsRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -131,17 +125,8 @@ class CashController extends Controller
             ->with('success', 'تم استلام نقدية من عميل بنجاح');
     }
 
-    public function store2_cash_clients(Request $request)
+    public function store2_cash_clients(CashClientsRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -168,16 +153,8 @@ class CashController extends Controller
             ->with('success', 'تم اعطاء سلفة الى العميل بنجاح');
     }
 
-    public function update_cash_clients(Request $request, $id)
+    public function update_cash_clients(CashClientsRequest $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
 
         // Return the old values before the operation
@@ -224,16 +201,8 @@ class CashController extends Controller
             ->with('success', 'تم تعديل البيانات بنجاح');
     }
 
-    public function update_borrow_clients(Request $request, $id)
+    public function update_borrow_clients(CashClientsRequest $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
 
         // Return the old values before the operation
@@ -411,16 +380,8 @@ class CashController extends Controller
         return view('client.finances.paymentsborrow.suppliers', compact('company_id', 'buy_cashs', 'company'));
     }
 
-    public function store_cash_suppliers(Request $request)
+    public function store_cash_suppliers(CashSuppliersRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -446,16 +407,8 @@ class CashController extends Controller
             ->with('success', 'تم دفع النقدية الى المورد بنجاح');
     }
 
-    public function store2_cash_suppliers(Request $request)
+    public function store2_cash_suppliers(CashSuppliersRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;
@@ -482,16 +435,8 @@ class CashController extends Controller
             ->with('success', 'تم اخذ سلفة من المورد بنجاح');
     }
 
-    public function update_cash_suppliers(Request $request, $id)
+    public function update_cash_suppliers(CashSuppliersRequest $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
         $data = $request->all();
 
         // Return the old values before the operation
@@ -537,16 +482,9 @@ class CashController extends Controller
         return redirect()->route('client.cash.suppliers')
             ->with('success', 'تم تعديل البيانات بنجاح');
     }
-    public function update_borrow_suppliers(Request $request, $id)
+    public function update_borrow_suppliers(CashSuppliersRequest $request, $id)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            'supplier_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'safe_id' => 'required',
-        ]);
+       
         $data = $request->all();
 
         // Return the old values before the operation

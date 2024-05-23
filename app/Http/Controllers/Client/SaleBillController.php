@@ -2,31 +2,32 @@
 
 namespace App\Http\Controllers\Client;
 
-use AIOSEO\Plugin\Common\Utils\Cache;
-use App\Http\Controllers\Controller;
-use App\Mail\sendingSaleBill;
 use App\Models\Bank;
-use App\Models\BankCash;
-use App\Models\BasicSettings;
+use App\Models\Cash;
+use App\Models\Safe;
 use App\Models\Branch;
 use App\Models\Client;
-use App\Models\OuterClient;
-use App\Models\OuterClientAddress;
-use App\Models\SaleBillNote;
-use App\Models\SaleBillReturn;
-use App\Models\Cash;
 use App\Models\Company;
-use App\Models\ExtraSettings;
 use App\Models\Product;
-use App\Models\Safe;
+use App\Models\BankCash;
 use App\Models\SaleBill;
-use App\Models\SaleBillElement;
-use App\Models\SaleBillExtra;
+use App\Models\OuterClient;
+use App\Models\SaleBillNote;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Auth;
+use App\Mail\sendingSaleBill;
+use App\Models\BasicSettings;
+use App\Models\ExtraSettings;
+use App\Models\SaleBillExtra;
+use App\Models\SaleBillReturn;
+use App\Models\SaleBillElement;
+use App\Models\OuterClientAddress;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use AIOSEO\Plugin\Common\Utils\Cache;
+use App\Http\Requests\SaleBillRequest;
+use Illuminate\Support\Facades\Artisan;
 
 class SaleBillController extends Controller
 {
@@ -178,16 +179,8 @@ class SaleBillController extends Controller
         );
     }
 
-    public function store_cash_outer_clients(Request $request)
+    public function store_cash_outer_clients(SaleBillRequest $request)
     {
-        $this->validate($request, [
-            'cash_number' => 'required',
-            //            'outer_client_id' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-        ]);
-
         $data = $request->all();
         $company_id = $data['company_id'];
         $data['client_id'] = Auth::user()->id;

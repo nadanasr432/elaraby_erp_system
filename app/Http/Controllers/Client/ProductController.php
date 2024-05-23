@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Store;
 use App\Models\Company;
 use App\Models\Product;
-use App\Models\Store;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -96,11 +97,8 @@ class ProductController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest  $request)
     {
-        $this->validate($request, [
-            'category_id' => 'required',
-        ]);
         $data = $request->all();
         if (empty($data['first_balance'])) $data['first_balance'] = 0;
         if (empty($data['qr']))
@@ -141,11 +139,8 @@ class ProductController extends Controller
         return view('client.products.edit', compact('stores', 'sub_categories', 'units', 'categories', 'product', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProductRequest  $request, $id)
     {
-        $this->validate($request, [
-            'category_id' => 'required',
-        ]);
         $data = $request->all();
 
         // check for category if khadamya

@@ -1,4 +1,4 @@
-<?php
+{{-- <?php
 $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id);
 ?>
     <!DOCTYPE html>
@@ -362,4 +362,4 @@ $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id
 </script>
 </body>
 
-</html>
+</html> --}}

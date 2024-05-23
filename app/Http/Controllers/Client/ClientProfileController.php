@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Client;
-use App\Models\ClientProfile;
 use Illuminate\Http\Request;
+use App\Models\ClientProfile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ClientProfileRequest;
+
 class ClientProfileController extends Controller
 {
     /**
@@ -27,13 +29,8 @@ class ClientProfileController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, $id)
+    public function store(ClientProfileRequest  $request, $id)
     {
-        $this->validate($request, [
-            'city_name' => 'required',
-            'age' => 'required',
-            'gender' => 'required'
-        ]);
         $input = $request->all();
         $user = Client::findOrFail($id);
         $profile = ClientProfile::where('client_id', $id)->first();
@@ -78,13 +75,9 @@ class ClientProfileController extends Controller
      * @param \App\Models\ClientProfile $profile
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request  $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|same:confirm-password'
-        ]);
+        // dd($request);
         $input = $request->all();
         if (!empty($input['password'])) {
             $input['password'] = Hash::make($input['password']);

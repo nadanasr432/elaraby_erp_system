@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Company;
-
+use App\Models\Category;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CategoryRequest;
 
 
 class CategoryController extends Controller
@@ -27,12 +28,8 @@ class CategoryController extends Controller
         return view('client.categories.create', compact('company_id', 'company'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $this->validate($request, [
-            'category_name' => 'required',
-            'category_type' => 'required',
-        ]);
         $data = $request->all();
         $company_id = $data['company_id'];
         $category = Category::create($data);
@@ -48,12 +45,8 @@ class CategoryController extends Controller
         return view('client.categories.edit', compact('category', 'company_id', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        $this->validate($request, [
-            'category_name' => 'required',
-            'category_type' => 'required',
-        ]);
         $input = $request->all();
         $category = Category::findOrFail($id);
         $category->update($input);

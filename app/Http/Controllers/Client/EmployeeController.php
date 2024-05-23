@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use App\Models\Safe;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\EmployeeCash;
-use App\Models\Safe;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\PostCashRequest;
 
 class EmployeeController extends Controller
 {
@@ -46,15 +48,10 @@ class EmployeeController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'name' => 'required',
-            'salary' => 'required',
-            'work_status' => 'required',
-        ]);
         $data = $request->all();
         $client_id = Auth::user()->id;
         $data['client_id'] = $client_id;
@@ -76,15 +73,10 @@ class EmployeeController extends Controller
         return view('client.employees.edit', compact('company_id','employee', 'company'));
     }
 
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'name' => 'required',
-            'salary' => 'required',
-            'work_status' => 'required',
-        ]);
         $data = $request->all();
         $employee = Employee::findOrFail($id);
         $data['employee_id'] = Auth::user()->id;
@@ -116,15 +108,9 @@ class EmployeeController extends Controller
         $safes = $company->safes;
         return view('client.employees.cash',compact('company','safes','company_id','employees'));
     }
-    public function post_cash(Request $request){
+    public function post_cash(PostCashRequest  $request){
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'employee_id' => 'required',
-            'amount' => 'required',
-            'safe_id' => 'required',
-            'date' => 'required',
-        ]);
         $data = $request->all();
         $data['client_id'] = Auth::user()->id;
         $amount = $data['amount'];
@@ -149,16 +135,10 @@ class EmployeeController extends Controller
         return view('client.employees.edit_cash', compact('company_id','safes','employees','employee_cash', 'company'));
     }
 
-    public function update_cash(Request $request, $id)
+    public function update_cash(PostCashRequest  $request, $id)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'employee_id' => 'required',
-            'amount' => 'required',
-            'safe_id' => 'required',
-            'date' => 'required',
-        ]);
         $data = $request->all();
         $data['client_id'] = Auth::user()->id;
         // return old values

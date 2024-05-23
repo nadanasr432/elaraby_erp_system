@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Models\Screen;
 use App\Models\Company;
 use App\Models\PosSetting;
-use App\Models\Screen;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -26,15 +27,10 @@ class BranchController extends Controller
         return view('client.branches.create',compact('company_id','company'));
     }
 
-    public function store(Request $request)
+    public function store(BranchRequest $request)
     {
         $company_id = Auth::user()->company_id;
         $company = Company::FindOrFail($company_id);
-        $this->validate($request, [
-            'branch_name' => 'required',
-            'branch_phone' => 'required',
-            'branch_address' => 'required',
-        ]);
         $data = $request->all();
         $branch = Branch::create($data);
         $pos_settings = PosSetting::create([
@@ -57,13 +53,8 @@ class BranchController extends Controller
         $branch = Branch::findOrFail($id);
         return view('client.branches.edit', compact('branch', 'company_id', 'company'));
     }
-    public function update(Request $request, $id)
+    public function update(BranchRequest $request, $id)
     {
-        $this->validate($request, [
-            'branch_name' => 'required',
-            'branch_phone' => 'required',
-            'branch_address' => 'required',
-        ]);
         $input = $request->all();
         $branch = Branch::findOrFail($id);
         $branch->update($input);
