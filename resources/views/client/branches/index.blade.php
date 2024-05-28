@@ -32,8 +32,8 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th class="text-center">{{ __('branches.branche-name') }}</th>
-                                    <th class="text-center">{{ __('branches.branche-address') }}</th>
                                     <th class="text-center">{{ __('branches.branche-phone') }}</th>
+                                    <th class="text-center">{{ __('branches.branche-address') }}</th>
                                     <th class="text-center">{{ __('branches.commercial-record') }}</th>
                                     <th class="text-center">{{ __('main.control') }}</th>
                                 </tr>

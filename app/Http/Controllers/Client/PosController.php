@@ -310,6 +310,10 @@ class PosController extends Controller
         } else {
             $PosOpen->update($data);
         }
+         if ($PosOpen && !empty($PosOpen)) {
+            $PosOpen->update(['value_added_tax' => 1]);
+             
+         }
 
         $data['pos_open_id'] = $PosOpen->id;
         $product = Product::FindOrFail($data['product_id']);
@@ -486,6 +490,7 @@ class PosController extends Controller
                 $posSettings->update(['taxStatusPos' => 1]);
             elseif ($request->tax_value == 130)
                 $posSettings->update(['taxStatusPos' => 2]);
+                
         }
 
 
@@ -880,7 +885,7 @@ class PosController extends Controller
             'tableNum' => $billDetails['tableNum'] ?? 0,
             'notes' => $billDetails['notes'] ?? '',
             'status' => 'done',
-            'value_added_tax' => 0,
+            'value_added_tax' => empty($billDetails['tax_amount']) ? 1 : 0,
             'total_amount' => $billDetails['total_amount'],
             'tax_amount' => $billDetails['tax_amount'],
             'tax_value' => $billDetails['tax_value'],
@@ -971,13 +976,14 @@ class PosController extends Controller
             'tableNum' => $billDetails['tableNum'] ?? 0,
             'notes' => $billDetails['notes'] ?? '',
             'status' => 'done',
-            'value_added_tax' => 0,
+             'value_added_tax' => empty($billDetails['tax_amount']) ? 1 : 0,
             'total_amount' => $billDetails['total_amount'],
             'tax_amount' => $billDetails['tax_amount'],
             'tax_value' => $billDetails['tax_value'],
             'class' => 'paid'
         ]);
-
+        
+ 
         if ($posOpen) {
             # create pos invoice Elements #
             foreach ($productsArr as $element) {
@@ -998,6 +1004,7 @@ class PosController extends Controller
                     ]);
                 }
             }
+           
             # =============================== #
 
             #===== بيضيف اجمالي الفاتورة للخزنة تبع المؤسسة (كارباح)====#
@@ -1059,7 +1066,7 @@ class PosController extends Controller
             'tableNum' => $billDetails['tableNum'] ?? 0,
             'notes' => $billDetails['notes'] ?? '',
             'status' => 'done',
-            'value_added_tax' => 0,
+            'value_added_tax' => empty($billDetails['tax_amount']) ? 1 : 0,
             'total_amount' => $billDetails['total_amount'],
             'tax_amount' => $billDetails['tax_amount'],
             'tax_value' => $billDetails['tax_value']
@@ -1153,7 +1160,7 @@ class PosController extends Controller
             'tableNum' => $billDetails['tableNum'] ?? 0,
             'notes' => $billDetails['notes'] ?? '',
             'status' => 'pending',
-            'value_added_tax' => 0,
+            'value_added_tax' => empty($billDetails['tax_amount']) ? 1 : 0,
             'total_amount' => $billDetails['total_amount'],
             'tax_amount' => $billDetails['tax_amount'],
             'tax_value' => $billDetails['tax_value'],
@@ -1206,13 +1213,13 @@ class PosController extends Controller
             'tableNum' => $billDetails['tableNum'] ?? 0,
             'notes' => $billDetails['notes'] ?? '',
             'status' => 'done',
-            'value_added_tax' => 0,
+            'value_added_tax' => empty($billDetails['tax_amount']) ? 1 : 0,
             'total_amount' => $billDetails['total_amount'],
             'tax_amount' => $billDetails['tax_amount'],
             'tax_value' => $billDetails['tax_value'],
             'class' => 'partial'
         ]);
-
+         
         if ($posOpen) {
             # create pos invoice Elements #
             foreach ($productsArr as $element) {
@@ -1323,9 +1330,9 @@ class PosController extends Controller
     {
         $pos = PosOpen::FindOrFail($pos_id);
         $clientID = $pos->client_id;
+        $branchID = Client::findOrFail($clientID);
         $company_id = $pos->company_id;
         $company = Company::FindOrFail($company_id);
-        $branchID = Client::findOrFail($clientID);
         $branchID = $branchID->branch_id;
         if ($branchID) {
             $branchDetails = $pos->company->branches->where('id', $branchID)->first();

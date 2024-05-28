@@ -14,9 +14,23 @@
         bottom: 40px;
         background-color: #28d094;
     }
+    .mobilePOSBtn2 {
+      
+        background: white;  border: 1px dashed #449f2d; padding: 1px 5px 11px 7px !important; border-radius: 31px;
+        font-weight: bold;
+        position: fixed;
+        z-index: 99999999999999999999;
+        display: block;
+        left: 340px;
+        bottom: 70px;
+      
+    }
 
     @media screen and (max-width: 650px) {
         .mobilePOSBtn {
+            display: block !important;
+        }
+        .mobilePOSBtn2 {
             display: block !important;
         }
     }
@@ -818,7 +832,7 @@
                                             @if($client->prev_balance > 0) client-border-paid @else client-border-notpaid @endif">
 
                                             <img class="media-object rounded-circle"
-                                                 src="{{asset('images/mty-client.png')}}">
+                                                 src="{{asset('assets/images/mty-client.png')}}">
                                             <i></i>
                                         </span>
                                     </div>
@@ -974,6 +988,125 @@
         </svg>
         <span>POS</span>
     </a>
+    <a class="mobilePOSBtn2" style="display: none;"
+       class="nav-link nav-link-label" href="#"
+       data-toggle="dropdown" aria-expanded="false">
+        <svg style="width: 15px;height: 15px;fill: #449f2d;" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 448 512">
+            <path
+                d="M240 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H176V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H240V80z"/>
+        </svg>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-left pr-5 pl-5 mt-5 mb-5" style="margin-left:50px;margin-right:50px">
+        <li class="dropdown-menu-header">
+            <h4 class="dropdown-header m-0">
+                <span class="grey darken-2"
+                      style="font-size: 16px !important;">@lang('home.Quick shortcuts') </span>
+                <span
+                    class="notification-tag badge badge-default badge-danger float-right m-0">
+                   @lang('home.New') 
+                </span>
+            </h4>
+        </li>
+
+        <li class="dropdown-menu-footer">
+            <a class="dropdown-item" href="{{ route('client.categories.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+                @lang('home.Add category') 
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.products.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+                @lang('home.Add a product')
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.outer_clients.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+              @lang('home.Add a client') 
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.suppliers.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+              @lang('home.Add a resource')  
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.sale_bills.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+              @lang('home.New bill of sale')  
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.purchase_orders.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+               @lang('home.New purchase invoice') 
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.add.cash.suppliers') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+               @lang('home.Cash payment to a supplier') 
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.give.cash.clients') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+              @lang('home.Cash payment to a customer')  
+            </a>
+
+            <a class="dropdown-item" href="{{ route('employees.get.cash') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+             @lang('home.Cash payment to an employee')   
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.add.cash.clients') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+              @lang('home.Register a payment from a customer')  
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.give.cash.suppliers') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+               @lang('home.Register a batch from a supplier') 
+            </a>
+
+            <a class="dropdown-item" href="{{ route('client.expenses.create') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
+                </svg>
+               @lang('home.Register a batch from an employee') 
+            </a>
+        </li>
+    </ul>
     <div class="spinner-gif">
         <img src="/spinner.gif"
              style="margin: auto; text-align: center; width: 88px; display: block;top:200px;position: relative;">

@@ -208,7 +208,7 @@
                         <option
                             value="{{ $product->id }}"
                             data-tokens="{{ $product->code_universal }}">
-                            {{ $product->product_name }}
+                            {{ $product->product_name ?? ' '}}
                         </option>
                     @endforeach
                 </select>
@@ -293,7 +293,7 @@
                         array_push($sum, $element->quantity_price);
                         $tbody .= '<tr>';
                         $tbody .= '<td>' . ++$i . '</td>';
-                        $tbody .= '<td>' . $element->product->product_name . '</td>';
+                        $tbody .= '<td>' . ($element->product ? $element->product->product_name : ' ') . '</td>';
                         $tbody .= '<td>' . $element->product_price . '</td>';
                         if (!empty($element->unit_id))
                             $tbody .= '<td>' . $element->quantity . ' ' . $element->unit->unit_name . '</td>';

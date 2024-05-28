@@ -357,7 +357,7 @@
 @section('content')
     <!-- =====whatsapp icon===== -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <a href="https://api.whatsapp.com/send?phone=0562354761&text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85  "
+    <a href="https://api.whatsapp.com/send?phone=+9660562354761&text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85  "
        class="float" target="_blank">
         <i class="fa fa-whatsapp my-float"></i>
     </a>

@@ -33,6 +33,7 @@
         border-top-right-radius: 5px !important;
         border-bottom-right-radius: 5px !important;
     }
+
 </style>
 @section('content')
     @if (session('success'))

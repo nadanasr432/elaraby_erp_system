@@ -226,7 +226,12 @@
 
                                     <!--taxes--->
                                     <td>
+                                        @if($pos->value_added_tax==1)
+                                        15
+                                        @else
+                                        
                                         {{ round($pos->tax_amount,2) }}
+                                        @endif 
                                         <?php
                                         $sum3 = $sum3 + $pos->tax_amount;
                                         ?>

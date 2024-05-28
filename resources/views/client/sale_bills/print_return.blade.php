@@ -1,4 +1,4 @@
-{{-- <?php
+<?php
 $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id);
 ?>
     <!DOCTYPE html>
@@ -303,8 +303,8 @@ $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id
             </div>
             <div class="clearfix"></div>
             <div class="text-center mt-2 mb-2">
-            <!--{!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate(Request::url()) !!}-->
-                {{-- <?php
+            {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate(Request::url()) !!}
+                <?php
                 use Salla\ZATCA\GenerateQrCode;
                 use Salla\ZATCA\Tags\InvoiceDate;
                 use Salla\ZATCA\Tags\InvoiceTaxAmount;
@@ -318,7 +318,7 @@ $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id
                     new InvoiceTotalAmount($itemsInSaleBillReturn[0]->quantity_price), // invoice total amount
                 ])->render();
                 ?>
-                <img src="{{ $displayQRCodeAsBase64 }}" style="width: 150px; height: 130px;" alt="QR Code"/> --}}
+                <img src="{{ $displayQRCodeAsBase64 }}" style="width: 150px; height: 130px;" alt="QR Code"/> 
 
                 <img style="width: 170px!important;height: 140px!important;"
                      src="{{ asset($company->basic_settings->electronic_stamp) }}"/>
@@ -362,4 +362,4 @@ $company = \App\Models\Company::FindOrFail($itemsInSaleBillReturn[0]->company_id
 </script>
 </body>
 
-</html> --}}
+</html>
