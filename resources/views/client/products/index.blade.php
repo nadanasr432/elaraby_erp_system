@@ -142,24 +142,24 @@
                         @foreach ($products as $key => $product)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td style="width: 120px !important;">{{ $product->product_name }}</td>
+                                <td style="width: 120px !important;">{{ $product->product_name ?? ' '}}</td>
                                 <td style="width:120px !important;">
                                     @if(!empty($product->store_id))
-                                        {{ $product->store->store_name }}
+                                        {{ $product->store->store_name ?? ' '}}
                                     @endif
                                 </td>
                                 <td>
                                     {{ $product->category->category_name}}
                                     @if(!empty($product->sub_category_id))
-                                        {{ $product->subcategory->sub_category_name}}
+                                        {{ $product->subcategory->sub_category_name ?? ' '}}
                                     @endif
                                 </td>
-                                <td>{{floatval( $product->wholesale_price  )}}</td>
-                                <td>{{floatval( $product->sector_price  )}}</td>
-                                <td>{{floatval( $product->purchasing_price  )}}</td>
-                                <td>{{floatval( $product->first_balance  )}}
+                                <td>{{floatval( $product->wholesale_price  ?? ' ')}}</td>
+                                <td>{{floatval( $product->sector_price  ?? ' ')}}</td>
+                                <td>{{floatval( $product->purchasing_price  ?? ' ')}}</td>
+                                <td>{{floatval( $product->first_balance  ?? ' ')}}
                                     @if(!empty($product->unit_id))
-                                        {{$product->unit->unit_name}}
+                                        {{$product->unit->unit_name ?? ' '}}
                                     @endif
                                 </td>
                                 <td>{{ $product->code_universal }}</td>

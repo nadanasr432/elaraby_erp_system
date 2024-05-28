@@ -257,7 +257,7 @@
                                     </span>
                                 </a>
                                 <ul class="menu-content">
-                                    @can('قائمة المنتجات المتوفرة (تحكم كامل)', 'قائمة المنتجات المتوفرة (عرض فقط)')
+                                  @can('قائمة المنتجات المتوفرة (عرض فقط)')
                                         <li class="{{ Request::is('*/products') ? 'active' : '' }}">
                                             <a href="{{ route('client.products.index') }}">
                                                 <svg style="width: 15px;fill:lightgreen;"
@@ -265,9 +265,11 @@
                                                     <path
                                                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"/>
                                                 </svg>
-                                                {{ __('sidebar.list-available-products') }}
+                                                {{ __('products.manage_products') }}
                                             </a>
                                         </li>
+                                        @endcan
+                                        @can('قائمة المنتجات المتوفرة (تحكم كامل)')
                                         <li class="{{ Request::is('*/generate-barcode') ? 'active' : '' }}">
                                             <a href="{{ route('barcode') }}">
                                                 <svg style="width: 15px;fill:lightgreen;"
@@ -334,7 +336,7 @@
                                     </span>
                                 </a>
                                 <ul class="menu-content">
-                                    @can('فواتير البيع السابقة (عرض فقط)', 'فواتير البيع السابقة (تحكم كامل)')
+                                  @can('فواتير البيع السابقة (عرض فقط)')
                                         <li class="{{ Request::is('*/sale_bills') ? 'active' : '' }}">
                                             <a href="{{ route('client.sale_bills.index') }}">
                                                 <svg style="width: 12px;fill:lightgreen;"
@@ -348,6 +350,7 @@
                                             </a>
                                         </li>
                                     @endcan
+                                    @can('فواتير البيع السابقة (تحكم كامل)')
                                     <li
                                         class="nav-item {{ Request::is('*/pos-sales-report*') ? 'active open' : '' }}">
                                         <a href="{{ route('pos.sales.report') }}">
@@ -361,6 +364,7 @@
                                             </span>
                                         </a>
                                     </li>
+                                    @endcan
                                     @can('مرتجعات فواتير البيع عملاء')
                                         <li class="{{ Request::is('*/sale-bills/get-returns') ? 'active' : '' }}">
                                             <a href="{{ url('/client/sale-bills/get-returns') }}">

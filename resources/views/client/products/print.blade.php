@@ -121,29 +121,29 @@
     @endphp
     @foreach ($products as $key => $product)
         <tr>
-            <td>{{ $product->code_universal }}</td>
-            <td>{{ $product->store->store_name }}</td>
+            <td>{{ $product->code_universal ?? ' '}}</td>
+            <td>{{ $product->store->store_name ?? ' '}}</td>
             <td>
-                {{ $product->category->category_name}}
+                {{ $product->category->category_name ?? ' '}}
                 @if(!empty($product->sub_category_id))
-                    {{ $product->subcategory->sub_category_name}}
+                    {{ $product->subcategory->sub_category_name ?? ' '}}
                 @endif
             </td>
-            <td>{{ $product->product_name }}</td>
+            <td>{{ $product->product_name ?? ' '}}</td>
 
             <td>
-                {{floatval($product->wholesale_price)}}
+                {{floatval($product->wholesale_price ?? ' ')}}
             </td>
             <td>
-                {{floatval($product->sector_price)}}
+                {{floatval($product->sector_price ?? ' ')}}
             </td>
             <td>
-                {{floatval($product->purchasing_price)}}
+                {{floatval($product->purchasing_price ?? ' ')}}
             </td>
             <td>
-                {{floatval($product->first_balance)}}
+                {{floatval($product->first_balance ?? ' ')}}
                 @if(!empty($product->unit_id))
-                    {{$product->unit->unit_name}}
+                    {{$product->unit->unit_name ?? ' '}}
                 @endif
             </td>
         </tr>

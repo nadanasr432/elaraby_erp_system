@@ -559,14 +559,22 @@
                     <label for="" class="d-block">ضريبة الطلب</label>
 
                     <select id="tax_id" class="form-control d-inline float-left w-50">
-                        <option value="" selected disabled>اختر نوع الضريبة</option>
-                        @foreach ($taxes as $tax)
-                            <option taxvalue="{{ $tax->tax_value }}"
-                                    value="{{ $tax->id }}">{{ $tax->tax_name }}</option>
-                        @endforeach
-                        <option value="inclusive" @if($pos_settings->taxStatusPos == 3) selected @endif>شامل الضريبة
-                        </option>
-                    </select>
+                            <option value="" selected disabled>اختر نوع الضريبة</option>
+                            @foreach ($taxes as $tax)
+                                <option
+                                    @if (isset($pos_open) && !empty($pos_open_tax) && $pos_open_tax->tax_id == $tax->id)
+                                    selected
+                                    @endif
+                                    @if($pos_settings->taxStatusPos == 1 && $tax->tax_value == 15) selected @endif
+                                    @if($pos_settings->taxStatusPos == 2 && $tax->tax_value == 130) selected @endif
+                                    taxvalue="{{ $tax->tax_value }}" value="{{ $tax->id }}">{{ $tax->tax_name }}
+                                </option>
+                            @endforeach
+
+                            <option value="inclusive" @if($pos_settings->taxStatusPos == 3) selected @endif>شامل
+                                الضريبة
+                            </option>
+                        </select>
 
                     <!--for saving tax value-->
                     <input type="number" id="tax_value"
@@ -973,7 +981,7 @@
             }
         });
 
-        //tax_id...
+       //tax_id...
         $('#tax_id').on('change', function () {
             let tax_id = $(this).val();
             let tax_value = 0;
@@ -986,6 +994,7 @@
             }
             $('#tax_value').val(tax_value);
         });
+
 
         //save_tax...
         $('.save_tax').on('click', function () {

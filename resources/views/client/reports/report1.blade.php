@@ -128,10 +128,13 @@
                                         <td>{{ $pos->created_at}}</td>
                                         <td>
                                             <?php $merchandise_cost = 0; ?>
-                                            @foreach($pos->elements as $element)
-                                                <?php $merchandise_cost = $merchandise_cost + $element->product->purchasing_price * $element->quantity; ?>
+                                          @foreach($pos->elements as $element)
+                                                @if($element->product && isset($element->product->purchasing_price))
+                                                    <?php $merchandise_cost += $element->product->purchasing_price * $element->quantity; ?>
+                                                @endif
                                             @endforeach
-                                            {{round($merchandise_cost,2)}}
+                                            {{ round($merchandise_cost, 2) }}
+
                                         </td>
                                         <td>
                                             @if(isset($pos))
