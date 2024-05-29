@@ -735,7 +735,7 @@
                                 @else
                                     <td dir="rtl">{{ $sumWithOutTax }} {{ $currency }} </td>
                                 @endif
-                                <td style="text-align: right;padding-right: 14px;">@lang('sales_bills.Total, excluding tax')</td>
+                                <td style="text-align: right;padding-right: 14px;">@lang('sales_bills.Total including tax')</td>
                             </tr>
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
