@@ -28,6 +28,7 @@ return [
     'subcat' => 'Subcategory',
     'choose_subcat' => 'Choose Subcategory',
     'pmodel' => ' Product Model',
+    'pmodel1' => ' Product Model',
     'pname' => 'Product Name',
     'punit' => 'Product Unit',
     'choseunit' => 'Choose Unit',
