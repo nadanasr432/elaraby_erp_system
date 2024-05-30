@@ -80,7 +80,9 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <span class="account-error text-danger"></span>
                                             </td>
+
                                             <td>
                                                 <input type="number" class="form-control debit" name="debit[]"
                                                     value="0">
@@ -109,6 +111,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <span class="account-error text-danger"></span>
                                             </td>
 
                                             <td>
@@ -164,36 +167,51 @@
 @endsection
 <script src="{{ asset('app-assets/js/jquery.min.js') }}"></script>
 <script>
+    $(document).ready(function() {
+    let selectedAccountIds = [];
+
     function attachRowEvents() {
-        $('.debit').off('input').on('input', function() {
+        $('.debit, .credit, .notes').off('input').on('input', function() {
             const row = $(this).closest('tr');
+            const accountField = row.find('select[name="account[]"]');
+            const accountError = row.find('.account-error');
+            const debitField = row.find('.debit');
             const creditField = row.find('.credit');
 
-            if ($(this).val() !== '') {
-                creditField.prop('disabled', true).val(0);
+            // Show error if account is not selected
+            if (!accountField.val()) {
+                accountError.text('Please select an account first.');
             } else {
-                creditField.prop('disabled', false);
+                accountError.text('');
             }
-            calculateTotal();
-        });
 
-        $('.credit').off('input').on('input', function() {
-            const row = $(this).closest('tr');
-            const debitField = row.find('.debit');
-
-            if ($(this).val() !== '') {
+            if ($(this).hasClass('debit') && $(this).val() !== '') {
+                creditField.prop('disabled', true).val(0);
+            } else if ($(this).hasClass('credit') && $(this).val() !== '') {
                 debitField.prop('disabled', true).val(0);
             } else {
                 debitField.prop('disabled', false);
+                creditField.prop('disabled', false);
             }
+
             calculateTotal();
         });
 
         $('.deleteRow').off('click').on('click', function() {
             $(this).closest('tr').remove();
+            updateSelectedAccountIds();
+            calculateTotal();
+        });
+
+        $('select[name="account[]"]').off('change').on('change', function() {
+            const row = $(this).closest('tr');
+            const accountError = row.find('.account-error');
+            if ($(this).val()) {
+                accountError.text('');
+            }
+            updateSelectedAccountIds();
         });
     }
-
 
     function calculateTotal() {
         let totalDebit = 0;
@@ -217,80 +235,97 @@
         }
     }
 
+    function updateSelectedAccountIds() {
+        selectedAccountIds = [];
+        $('select[name="account[]"]').each(function() {
+            let accountId = $(this).val();
+            if (accountId !== '') {
+                selectedAccountIds.push(accountId);
+            }
+        });
+        updateAccountOptions();
+    }
 
-    $(document).ready(function() {
-       
-        let selectedAccountIds = [];
-
-        function updateSelectedAccountIds() {
-            selectedAccountIds = [];
-            $('select[name="account[]"]').each(function() {
-                let accountId = $(this).val();
-                if (accountId !== '') {
-                    selectedAccountIds.push(accountId);
+    function updateAccountOptions() {
+        $('select[name="account[]"]').each(function() {
+            let currentVal = $(this).val();
+            $(this).find('option').each(function() {
+                if ($(this).val() !== '' && $(this).val() !== currentVal) {
+                    if (selectedAccountIds.includes($(this).val())) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
                 }
             });
-        }
-
-        function generateAccountOptions() {
-            let accountOptions = '<option value="">اختر الحساب</option>';
-            @foreach ($accounts as $account)
-                if (!selectedAccountIds.includes('{{ $account->id }}')) {
-                    accountOptions +=
-                        '<option value="{{ $account->id }}">{{ $account->account_name }}</option>';
-                }
-            @endforeach
-            return accountOptions;
-        }
-
-        $('select[name="account[]"]').change(function() {
-            updateSelectedAccountIds();
-            let selectedAccountId = $(this).val();
-            $(this).closest('tr').nextAll().find('select[name="account[]"] option').remove();
-            $(this).closest('tr').nextAll().find('select[name="account[]"]').append(
-                generateAccountOptions());
-            $(this).closest('tr').nextAll().find('select[name="account[]"] option[value="' +
-                selectedAccountId + '"]').remove();
         });
-         attachRowEvents();
+    }
 
-        $(".addNewRowHandler").click(function() {
-            updateSelectedAccountIds();
-            let accountOptions = generateAccountOptions();
+    attachRowEvents();
 
-            let newRow = '<tr> <td> <select required name="account[]" class="form-control"> ' +
-                accountOptions +
-                ' </select> </td> <td> <input type="number" class="form-control debit" name="debit[]" value="0"> </td> <td> <input type="number" class="form-control credit" name="credit[]" value="0"> </td> <td> <input type="text" class="form-control" name="notes[]"> </td> <td> <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow" value="X"/> </td> </tr>';
-            $(".tbodyJournals").append(newRow);
+    $(".addNewRowHandler").click(function() {
+        updateSelectedAccountIds();
+        let newRow = '<tr> <td> <select required name="account[]" class="form-control"> <option value="">اختر الحساب</option> @foreach ($accounts as $account) <option value="{{ $account->id }}">{{ $account->account_name }}</option> @endforeach </select> <span class="account-error text-danger"></span> </td> <td> <input type="number" class="form-control debit" name="debit[]" value="0"> </td> <td> <input type="number" class="form-control credit" name="credit[]" value="0"> </td> <td> <input type="text" class="form-control notes" name="notes[]"> </td> <td> <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow" value="X"/> </td> </tr>';
+        $(".tbodyJournals").append(newRow);
+        updateAccountOptions();
+        attachRowEvents();
+    });
 
-            const lastRow = $(".tbodyJournals tr").eq(-2);
-            const newDebitField = $(".tbodyJournals tr").last().find('.debit');
-            const newCreditField = $(".tbodyJournals tr").last().find('.credit');
+    $("#storeJournal").submit(function(e) {
+        e.preventDefault();
 
-            if (lastRow.find('.debit').prop('disabled')) {
-                newCreditField.prop('disabled', false);
+        let journalEntries = [];
+        let formIsValid = true;
+
+        $('.tbodyJournals tr').each(function() {
+            let account = $(this).find('select[name="account[]"]').val();
+            let debit = parseFloat($(this).find('input[name="debit[]"]').val()) || 0;
+            let credit = parseFloat($(this).find('input[name="credit[]"]').val()) || 0;
+            let notes = $(this).find('input[name="notes[]"]').val() || null;
+
+            if (account) {
+                journalEntries.push({
+                    account: account,
+                    debit: debit,
+                    credit: credit,
+                    notes: notes
+                });
+            } else if (debit !== 0 || credit !== 0 || notes) {
+                $(this).find('.account-error').text('Please select an account first.');
+                formIsValid = false;
+            } else {
+                $(this).find('.account-error').text('');
             }
-            if (lastRow.find('.credit').prop('disabled')) {
-                newDebitField.prop('disabled', false);
-            }
-            attachRowEvents();
         });
 
-        $("#storeJournal").submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: "POST",
-                url: "{{ route('client.journal.store') }}",
-                data: new FormData(this),
-                processData: false,
-                contentType: false,
-                success: (data) => {
-                    alert('تمت العملية بنجاح');
-                },
-                error: (data) => {
-                    alert('حدث خطأ ما');
-                }
-            });
+        if (!formIsValid) {
+            alert('Please fix the errors before submitting.');
+            return;
+        }
+
+        let formData = new FormData(this);
+        formData.append('journalEntries', JSON.stringify(journalEntries));
+
+        // Remove the unnecessary arrays from the FormData
+        formData.delete('account[]');
+        formData.delete('debit[]');
+        formData.delete('notes[]');
+        formData.delete('credit[]');
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('client.journal.store') }}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: (data) => {
+                alert('تمت العملية بنجاح');
+            },
+            error: (data) => {
+                alert('حدث خطأ ما');
+            }
         });
     });
+});
+
 </script>
