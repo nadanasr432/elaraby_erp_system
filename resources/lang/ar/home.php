@@ -21,6 +21,7 @@ return [
     "debtor" => "مدين",
     'notes' => "الملاحظات",
     'account' => "الحساب",
+    'dateV'=> "تاريخ القيد",
     "total-dues-to-suppliers" => "اجمالى مستحقات الموردين",
     "egmaly-elrased" => "اجمالي الرصيد",
     "net-external-balance" => "صافى الرصيد الخارجى",

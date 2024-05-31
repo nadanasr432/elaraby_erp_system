@@ -19,11 +19,11 @@
                 <div class="card-header border-bottom border-secondary p-1">
                     <div class="d-flex justify-content-between align-items-baseline">
                         <h3 class="pull-right font-weight-bold">
-                            عرض كل قيود اليومية
+                            @lang('main.view_voucher_entry')
                         </h3>
                         <a class="btn pull-left btn-primary btn-sm p-1" href="{{ route('client.voucher.create') }}">
                             <i class="fa fa-plus"></i>
-                            اضف قيد يومية
+                            @lang('main.add_voucher_entry')
                         </a>
                     </div>
                 </div>
@@ -35,10 +35,10 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">تاريخ القيد</th>
-                                    <th class="text-center">مدين</th>
-                                    <th class="text-center">دائن</th>
-                                    <th class="text-center">ملاحظات</th>
+                                    <th class="text-center">@lang('home.dateV')</th>
+                                    <th class="text-center">@lang('home.debtor')</th>
+                                    <th class="text-center">@lang('home.creditor')</th>
+                                    <th class="text-center">@lang('home.notes')</th>
                                     <th class="text-center">{{ __('main.amount') }}</th>
                                 </tr>
                             </thead>
@@ -59,16 +59,18 @@
                                         <td>{{ $voucher->date ? \Carbon\Carbon::parse($voucher->date)->format('Y-m-d') : '' }}
                                         </td>
                                         <td>
-                                        @foreach ( $credits as  $credit)
-                                        <span class="badge badge-primary ml-2">{{$credit?->accountingTree->account_name}}</span>
-                                        @endforeach
+                                            @foreach ($credits as $credit)
+                                                <span
+                                                    class="badge badge-primary ml-2">{{ $credit?->accountingTree->account_name }}</span>
+                                            @endforeach
                                         </td>
-                                        <td>  @foreach ( $depits as  $depit)
-                                            <span class="badge badge-success ml-2">{{$depit?->accountingTree->account_name}}</span>
+                                        <td>
+                                            @foreach ($depits as $depit)
+                                                <span
+                                                    class="badge badge-success ml-2">{{ $depit?->accountingTree->account_name }}</span>
                                             @endforeach
                                         <td>{{ $voucher->notation }}</td>
                                         <td>{{ $voucher->amount }}</td>
-                                        <td> </td>
                                     </tr>
                                 @endforeach
                             </tbody>

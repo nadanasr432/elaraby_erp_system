@@ -12,6 +12,7 @@ return [
     "login" => "تسجيل الدخول",
     "cancel" => "الغاء",
     "add" => "اضافة",
+    "add new row" => "اضافة صف جديد",
     "fast_adding" => "اضافة سريعة",
     "assets" => "الاصول",
     "fixed_assets" => "الاصول الثابتة",
@@ -325,5 +326,8 @@ return [
 
     "elaraby" => "العربي",
     "manst-elaraby" => "منصة العربي",
+    "add_voucher_entry" => "اضف قيد يومية",
+    "view_voucher_entry" => "عرض كل قيود اليومية",
+    "voucher_entry" =>"القيود اليومية"
 
 ];

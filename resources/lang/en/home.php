@@ -64,4 +64,6 @@ return [
     "There are no current messages!" => "There are no current messages!",
     "Notifications" => "Notifications",
     "No notifications yet!" => "No notifications yet!",
+    'dateV'=> 'Date',
+    'notes' =>'Notes',
 ];

@@ -213,6 +213,7 @@ return [
     "next"=>"التالي",
     "Total billing prices"=>" اجمالى اسعار الفواتير",
     "Cash sales client"=>" عميل مبيعات نقدية",
+    "voucher" => "تقرير دفتر اليومية",
 
 
 ];
