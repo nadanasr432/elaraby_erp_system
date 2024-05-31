@@ -108,8 +108,10 @@ return [
     "emails-section" => "Emails section",
     "send-mail-to-client" => "Send mail to client",
     "send-mail-to-supplier" => "Send mail to supplier",
-    "journal entry" => " journal entry",
-    "journal" => "Journal",
+     "journal entry" => " journal entry",
+     "journal" => "Journal",
+     "voucher entry" => " voucher entry",
+     "voucher" => "voucher",
     "public-reports" => "Public reports",
     "employees" => "Employees",
     "add-new-employee" => "Add new employee",
@@ -181,8 +183,8 @@ return [
     "next"=>"next",
     "Total billing prices"=>"Total billing prices",
     "Cash sales client"=>"Cash sales client",
-    
-    
+
+
 
 
 ];

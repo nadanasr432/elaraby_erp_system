@@ -28,7 +28,7 @@
                         <h3 class="pull-right font-weight-bold">
                             اضافة قيود اليومية
                         </h3>
-                        <a class="btn btn-danger btn-sm pull-left p-1" href="{{ route('client.journal.get') }}">
+                        <a class="btn btn-danger btn-sm pull-left p-1" href="{{ route('client.voucher.get') }}">
                             {{ __('main.back') }}
                         </a>
                     </div>
@@ -36,15 +36,17 @@
 
                 <!------HEADER----->
                 <div class="card-body p-2">
-                    <form id="storeJournal" action="{{ route('client.journal.store') }}" method="post">
+                    <form id="storevoucher" action="{{ route('client.voucher.store') }}" method="post">
                         @csrf
                         <div class="row p-0 mb-1">
                             <!---ROW1--->
                             <div class="row col-12 p-0 pb-2 pl-1 border-bottom border-secondary">
                                 <div class="col-md-6 pr-0">
                                     <label> التاريخ <span class="text-danger">*</span></label>
-                                    <input type="date" name="date" class="form-control" required>
+                                    <input type="date" name="date" class="form-control"
+                                        value="{{ old('date', date('Y-m-d')) }}" required>
                                 </div>
+
 
                                 {{-- <div class="col-md-6 pr-0">
                                     <label> الزبون/ المورد <span class="text-danger">*</span></label>
@@ -52,9 +54,9 @@
                                         name="payer_name" style="height: 43px" required>
                                 </div> --}}
 
-                                <div class="col-md-12 mt-1 pr-0">
+                                <div class="col-md-6  pr-0">
                                     <label> الملاحظات <span class="text-danger">*</span></label>
-                                    <textarea required class="form-control" placeholder="الملاحظات" name="description"></textarea>
+                                    <textarea required class="form-control" placeholder="الملاحظات" name="notation"></textarea>
                                 </div>
                             </div>
 
@@ -70,7 +72,7 @@
                                             <th scope="col">تحكم</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="tbodyJournals">
+                                    <tbody class="tbodyvouchers">
                                         <tr>
                                             <td>
                                                 <select required name="account[]" class="form-control">
@@ -92,7 +94,7 @@
                                                     value="0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="notes[]">
+                                                <input type="text" class="form-control" name="notation[]">
                                             </td>
                                             <td>
                                                 <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow"
@@ -102,7 +104,7 @@
                                         <tr>
                                             <td>
                                                 {{-- <select required name="account[]" class="form-control">
-                                                    @include('client.journal.accounts')
+                                                    @include('client.voucher.accounts')
                                                 </select> --}}
                                                 <select required name="account[]" class="form-control">
                                                     <option value="">اختر الحساب</option>
@@ -123,7 +125,8 @@
                                                     value="0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="notes[]">
+                                                <input type="text" class="form-control" name="notation[]">
+                                                <input type="hidden" id="amount" class="form-control" name="amount">
                                             </td>
                                             <td>
                                                 <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow"
@@ -150,14 +153,16 @@
 
                                 <button type="button" class="btn btn-primary addNewRowHandler">
                                     <i class="fa fa-plus"></i>
-                                    اضافة صف جديد
+                                    {{ __('main.add new row') }}
                                 </button>
+                                <button class="btn btn-success font-weight-bold"
+                                    type="submit">{{ __('main.add') }}</button>
                             </div>
                         </div>
-                        <div class="col-12 text-center border-top border-secondary mt-1 pt-2 pr-0 pl-0">
+                        {{-- <div class="col-12 text-center border-top border-secondary mt-1 pt-2 pr-0 pl-0">
                             <button class="btn btn-success w-100 font-weight-bold"
                                 type="submit">{{ __('main.add') }}</button>
-                        </div>
+                        </div> --}}
                     </form>
 
                 </div>
@@ -171,7 +176,7 @@
         let selectedAccountIds = [];
 
         function attachRowEvents() {
-            $('.debit, .credit, .notes').off('input').on('input', function() {
+            $('.debit, .credit, .notation').off('input').on('input', function() {
                 const row = $(this).closest('tr');
                 const accountField = row.find('select[name="account[]"]');
                 const accountError = row.find('.account-error');
@@ -214,10 +219,10 @@
         }
 
         function calculateTotal() {
-            let totalDebit = 0;
-            let totalCredit = 0;
+            var totalDebit = 0;
+            var totalCredit = 0;
 
-            $('.tbodyJournals tr').each(function() {
+            $('.tbodyvouchers tr').each(function() {
                 const debitValue = parseFloat($(this).find('.debit').val()) || 0;
                 const creditValue = parseFloat($(this).find('.credit').val()) || 0;
 
@@ -266,32 +271,32 @@
         $(".addNewRowHandler").click(function() {
             updateSelectedAccountIds();
             let newRow =
-                '<tr> <td> <select required name="account[]" class="form-control"> <option value="">اختر الحساب</option> @foreach ($accounts as $account) <option value="{{ $account->id }}">{{ $account->account_name }}</option> @endforeach </select> <span class="account-error text-danger"></span> </td> <td> <input type="number" class="form-control debit" name="debit[]" value="0"> </td> <td> <input type="number" class="form-control credit" name="credit[]" value="0"> </td> <td> <input type="text" class="form-control notes" name="notes[]"> </td> <td> <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow" value="X"/> </td> </tr>';
-            $(".tbodyJournals").append(newRow);
+                '<tr> <td> <select required name="account[]" class="form-control"> <option value="">اختر الحساب</option> @foreach ($accounts as $account) <option value="{{ $account->id }}">{{ $account->account_name }}</option> @endforeach </select> <span class="account-error text-danger"></span> </td> <td> <input type="number" class="form-control debit" name="debit[]" value="0"> </td> <td> <input type="number" class="form-control credit" name="credit[]" value="0"> </td> <td> <input type="text" class="form-control notation" name="notation[]"> </td> <td> <input type="button" class="mt-1 btn btn-danger btn-sm deleteRow" value="X"/> </td> </tr>';
+            $(".tbodyvouchers").append(newRow);
             updateAccountOptions();
             attachRowEvents();
         });
 
-        $("#storeJournal").submit(function(e) {
+        $("#storevoucher").submit(function(e) {
             e.preventDefault();
-
-            let journalEntries = [];
+            $("#amount").val($("#totalDebit").text())
+            let transactions = [];
             let formIsValid = true;
 
-            $('.tbodyJournals tr').each(function() {
+            $('.tbodyvouchers tr').each(function() {
                 let account = $(this).find('select[name="account[]"]').val();
                 let debit = parseFloat($(this).find('input[name="debit[]"]').val()) || 0;
                 let credit = parseFloat($(this).find('input[name="credit[]"]').val()) || 0;
-                let notes = $(this).find('input[name="notes[]"]').val() || null;
+                let notation = $(this).find('input[name="notation[]"]').val() || null;
 
                 if (account) {
-                    journalEntries.push({
+                    transactions.push({
                         account: account,
                         debit: debit,
                         credit: credit,
-                        notes: notes
+                        notation: notation
                     });
-                } else if (debit !== 0 || credit !== 0 || notes) {
+                } else if (debit !== 0 || credit !== 0 || notation) {
                     $(this).find('.account-error').text('Please select an account first.');
                     formIsValid = false;
                 } else {
@@ -303,24 +308,32 @@
                 alert('Please fix the errors before submitting.');
                 return;
             }
-
+            console.log(transactions);
             let formData = new FormData(this);
-            formData.append('journalEntries', JSON.stringify(journalEntries));
-
+            // formData.append('transactions', JSON.stringify(transactions));
+            transactions.forEach((transaction, index) => {
+                for (let key in transaction) {
+                    formData.append(`transactions[${index}][${key}]`, transaction[key]);
+                }
+            });
+            console.log(formData);
             // Remove the unnecessary arrays from the FormData
             formData.delete('account[]');
             formData.delete('debit[]');
-            formData.delete('notes[]');
+            formData.delete('notation[]');
             formData.delete('credit[]');
 
             $.ajax({
                 type: "POST",
-                url: "{{ route('client.journal.store') }}",
+                url: "{{ route('client.voucher.store') }}",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: (data) => {
                     alert('تمت العملية بنجاح');
+                    setTimeout(function(){
+                        window.location.href="/client/voucher/get";
+                    },500);
                 },
                 error: (data) => {
                     alert('حدث خطأ ما');
