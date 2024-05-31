@@ -12,4 +12,8 @@ class accounting_tree extends Model
     public function childs() {
         return $this->hasMany('App\Models\accounting_tree','parent_id','id') ;
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

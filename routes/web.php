@@ -48,7 +48,8 @@ use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Client\OuterClientController;
 use App\Http\Controllers\Client\SubCategoryController;
 use App\Http\Controllers\Client\ImportExportController;
-use App\Http\Controllers\Client\JournalEntryController;
+// use App\Http\Controllers\Client\JournalEntryController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Client\ClientProfileController;
 use App\Http\Controllers\Client\PurchaseOrderController;
 use App\Http\Controllers\Client\SaleBillPrintDemoController;
@@ -140,25 +141,25 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
     });
 
     Route::group(
-        [],
-        function () {
-            Auth::routes(
-                [
-                    'verify' => false,
-                    'register' => false,
-                ]
-            );
-            Route::GET('client/login', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLoginForm'])->name('client.login');
-            Route::POST('client/login', [App\Http\Controllers\Client\Auth\LoginController::class, 'login']);
-            Route::POST('client/logout', [App\Http\Controllers\Client\Auth\LoginController::class, 'logout'])->name('client.logout');
-            Route::GET('client/password/confirm', [App\Http\Controllers\Client\Auth\LoginController::class, 'showConfirmForm'])->name('client.password.confirm');
-            Route::POST('client/password/confirm',  [App\Http\Controllers\Client\Auth\LoginController::class, 'confirm']);
-            Route::POST('client/password/email',  [App\Http\Controllers\Client\Auth\LoginController::class, 'sendResetLinkEmail'])->name('client.password.email');
-            Route::GET('client/password/reset', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLinkRequestForm'])->name('client.password.request');
-            Route::POST('client/password/reset', [App\Http\Controllers\Client\Auth\LoginController::class, 'reset'])->name('client.password.update');
-            Route::GET('client/password/reset/{token}', [App\Http\Controllers\Client\Auth\LoginController::class, 'showResetForm'])->name('client.password.reset');
-        }
-    );
+        [
+
+        ], function () {
+        Auth::routes(
+            [
+                'verify' => false,
+                'register' => false,
+            ]
+        );
+        Route::GET('client/login', [App\Http\Controllers\Client\Auth\LoginController::class,'showLoginForm'])->name('client.login');
+        Route::POST('client/login', [App\Http\Controllers\Client\Auth\LoginController::class, 'login']);
+        Route::POST('client/logout', [App\Http\Controllers\Client\Auth\LoginController::class, 'logout'])->name('client.logout');
+        Route::GET('client/password/confirm', [App\Http\Controllers\Client\Auth\LoginController::class, 'showConfirmForm'])->name('client.password.confirm');
+        Route::POST('client/password/confirm',  [App\Http\Controllers\Client\Auth\LoginController::class, 'confirm']);
+        Route::POST('client/password/email',  [App\Http\Controllers\Client\Auth\LoginController::class, 'sendResetLinkEmail'])->name('client.password.email');
+        Route::GET('client/password/reset', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLinkRequestForm'])->name('client.password.request');
+        Route::POST('client/password/reset', [App\Http\Controllers\Client\Auth\LoginController::class, 'reset'])->name('client.password.update');
+        Route::GET('client/password/reset/{token}', [App\Http\Controllers\Client\Auth\LoginController::class, 'showResetForm'])->name('client.password.reset');
+    });
     Route::group(
         [
             'middleware' => ['auth:admin-web'],
@@ -248,10 +249,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             'middleware' => ['auth:client-web', CheckStatus::class],
             'prefix' => 'client',
 
-        ],
-        function () {
-            Route::get('/', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLoginForm']);
-            Route::get('/home',  [HomeController::class, 'index'])->name('client.home');
+        ], function () {
+        Route::get('/', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLoginForm']);
+        Route::get('/home',  [HomeController::class, 'index'])->name('client.home');
 
 
             Route::post('toggleSearchCardOpen', [HomeController::class, 'toggleSearchCardOpen'])->name('toggleSearchCardOpen');
@@ -949,9 +949,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
 
 
             // Journal routes
-            Route::get('/journal/create', [JournalEntryController::class, 'create_journal_entries'])->name('client.journal.create');
-            Route::get('/journal/get', [JournalEntryController::class, 'get_journal_entries'])->name('client.journal.get');
-            Route::post('/journal/store', [JournalEntryController::class, 'store'])->name('client.journal.store');
+            Route::get('/voucher/create', [VoucherController::class, 'create_voucher_entries'])->name('client.voucher.create');
+            Route::get('/voucher/get', [VoucherController::class, 'get_voucher_entries'])->name('client.voucher.get');
+            Route::post('/voucher/store', [VoucherController::class, 'store'])->name('client.voucher.store');
+            // Route::post('/journal/store', [VoucherController::class, 'store_journal_entries'])->name('client.journal.store');
 
             // Cost Center routes
             Route::get('/cost_center/get', [CostCenterController::class, 'index'])->name('client.cost_center');
@@ -987,9 +988,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::post('/get-coupon-code', [PosController::class, 'get_coupon_code'])->name('get.coupon.code');
             Route::post('/getNewPosBillID', [PosController::class, 'getNewPosBillID'])->name('getNewPosBillID');
             Route::post('/clients-store-cash-clients-pos', [PosController::class, 'store_cash_clients'])
-                ->name('client.store.cash.clients.pos');
-        }
-    );
+            ->name('client.store.cash.clients.pos');
+
+
+
+
+
+
+
+
+
+    });
 });
 
 Route::get('/get_csid', 'FatooraController@get_csid');
