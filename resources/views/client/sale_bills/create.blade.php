@@ -667,6 +667,10 @@
             @if (!isset($open_sale_bill) || empty($open_sale_bill)) disabled @endif " printColor="2" isMoswada="0" invoiceType='2'>
             حفظ و طباعة 3
         </a>
+        <a href="javascript:;" role="button" style="height: 40px;border:1px solid #5e8b0b;background: #5e8b0b !important;color:white !important;" class="btn save_btn2 btn-md btn-primary pull-right ml-1
+            @if (!isset($open_sale_bill) || empty($open_sale_bill)) disabled @endif " printColor="2" isMoswada="0" invoiceType='4'>
+            حفظ و طباعة 4
+        </a>
 
         <!------FATOORAH MOSWADA---->
         <a href="javascript:;" role="button" style="height: 40px;" class="btn save_btn2 btn-md btn-warning pull-right ml-1

@@ -120,7 +120,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
 
     Route::get('/pos-print/{pos_id?}', [\App\Http\Controllers\Client\PosController::class, 'print'])->name('pos.open.print');
 
-// *********  Admin Routes ******** //
+    // *********  Admin Routes ******** //
 
     Route::group(['namespace' => 'Admin'], function () {
         Auth::routes(
@@ -129,7 +129,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
                 'register' => false,
             ]
         );
-        Route::GET('admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class,'showLoginForm'])->name('admin.login');
+        Route::GET('admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
         Route::POST('admin/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'login']);
         Route::POST('admin/logout', [App\Http\Controllers\Admin\Auth\LoginController::class, 'logout'])->name('admin.logout');
         Route::GET('admin/password/confirm', [App\Http\Controllers\Admin\Auth\ConfirmPasswordController::class, 'showConfirmForm'])->name('admin.password.confirm');
@@ -245,7 +245,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
     );
 
     Route::group(
-        ['middleware' => ['auth:client-web', CheckStatus::class],
+        [
+            'middleware' => ['auth:client-web', CheckStatus::class],
             'prefix' => 'client',
 
         ], function () {
@@ -615,7 +616,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::delete('/quotations-deleteBill', [QuotationController::class, 'delete_bill'])->name('client.quotations.deleteBill');
 
             Route::get('/convert-to-salebill/{id?}', [QuotationController::class, 'convert_to_salebill'])
-            ->name('convert.to.salebill');
+                ->name('convert.to.salebill');
 
 
             // purchase_orders Routes
@@ -658,7 +659,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::delete('/purchase_orders-deleteBill', [PurchaseOrderController::class, 'delete_bill'])->name('client.purchase_orders.deleteBill');
 
             Route::get('/convert-to-buybill/{id?}', [PurchaseOrderController::class, 'convert_to_buybill'])
-            ->name('convert.to.buybill');
+                ->name('convert.to.buybill');
 
             Route::resource('sale_bills', SaleBillController::class)->names([
                 'index' => 'client.sale_bills.index',
@@ -1001,4 +1002,3 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
 });
 
 Route::get('/get_csid', 'FatooraController@get_csid');
-
