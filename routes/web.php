@@ -48,7 +48,8 @@ use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Client\OuterClientController;
 use App\Http\Controllers\Client\SubCategoryController;
 use App\Http\Controllers\Client\ImportExportController;
-use App\Http\Controllers\Client\JournalEntryController;
+// use App\Http\Controllers\Client\JournalEntryController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Client\ClientProfileController;
 use App\Http\Controllers\Client\PurchaseOrderController;
 use App\Http\Controllers\Client\SaleBillPrintDemoController;
@@ -141,7 +142,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
 
     Route::group(
         [
-           
+
         ], function () {
         Auth::routes(
             [
@@ -163,7 +164,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
         [
             'middleware' => ['auth:admin-web'],
             'prefix' => 'admin',
-            
+
         ],
         function () {
             Route::get('/',  [App\Http\Controllers\Admin\Auth\LoginController::class, 'showLoginForm']);
@@ -246,7 +247,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
     Route::group(
         ['middleware' => ['auth:client-web', CheckStatus::class],
             'prefix' => 'client',
-           
+
         ], function () {
         Route::get('/', [App\Http\Controllers\Client\Auth\LoginController::class, 'showLoginForm']);
         Route::get('/home',  [HomeController::class, 'index'])->name('client.home');
@@ -947,9 +948,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
 
 
             // Journal routes
-            Route::get('/journal/create', [JournalEntryController::class, 'create_journal_entries'])->name('client.journal.create');
-            Route::get('/journal/get', [JournalEntryController::class, 'get_journal_entries'])->name('client.journal.get');
-            Route::post('/journal/store', [JournalEntryController::class, 'store_journal_entries'])->name('client.journal.store');
+            Route::get('/voucher/create', [VoucherController::class, 'create_voucher_entries'])->name('client.voucher.create');
+            Route::get('/voucher/get', [VoucherController::class, 'get_voucher_entries'])->name('client.voucher.get');
+            Route::post('/voucher/store', [VoucherController::class, 'store'])->name('client.voucher.store');
+            // Route::post('/journal/store', [VoucherController::class, 'store_journal_entries'])->name('client.journal.store');
 
             // Cost Center routes
             Route::get('/cost_center/get', [CostCenterController::class, 'index'])->name('client.cost_center');
@@ -987,14 +989,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::post('/clients-store-cash-clients-pos', [PosController::class, 'store_cash_clients'])
             ->name('client.store.cash.clients.pos');
 
-            
-          
 
 
 
-            
-          
-           
+
+
+
+
+
     });
 });
 
