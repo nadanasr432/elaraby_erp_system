@@ -569,14 +569,14 @@
                                 <td dir="rtl">
                                     {{ $discountNote ? $discountNote . ' || ' : '' }}
                                     ({{ round(($discountValue / $realtotal) * 100, 1) }}%) {{ $discountValue }}
-                                    {{ $currency }}
+                                    
                                 </td>
                             </tr>
 
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
                                 <td style="text-align: left;padding-right: 14px;">@lang('sales_bills.Total, excluding tax')</td>
-                                <td dir="rtl">{{ $sumWithOutTax }} {{ $currency }}</td>
+                                <td dir="rtl">{{ $sumWithOutTax }} </td>
 
                             </tr>
 
@@ -597,9 +597,9 @@
                                     ({{ $company->tax_value_added ?? '0' }}%)
                                 </td>
                                 @if ($company->tax_value_added && $company->tax_value_added != 0)
-                                    <td dir="rtl">{{ $totalTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $totalTax }}</td>
                                 @else
-                                    <td dir="rtl">0 {{ $currency }} </td>
+                                    <td dir="rtl">0</td>
                                 @endif
                             </tr>
 
@@ -607,9 +607,9 @@
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: {{ $printColor }};color:white;">
                                 <td style="text-align: left;padding-right: 14px;">@lang('sales_bills.Total, excluding tax')</td>
                                 @if ($company->tax_value_added && $company->tax_value_added != 0)
-                                    <td dir="rtl">{{ $sumWithTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $sumWithTax }}</td>
                                 @else
-                                    <td dir="rtl">{{ $sumWithOutTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $sumWithOutTax }}</td>
                                 @endif
 
                             </tr>
@@ -618,7 +618,7 @@
                                 <td style="text-align: left;padding-right: 14px;">
                                     @lang('sales_bills.The amount paid')
                                 </td>
-                                <td dir="rtl">{{ $sale_bill->paid }} {{ $currency }}</td>
+                                <td dir="rtl">{{ $sale_bill->paid }} </td>
 
                             </tr>
                             <tr
@@ -627,7 +627,7 @@
                                     @lang('sales_bills.Residual')
                                 </td>
                                 <td dir="rtl">
-                                    {{ $sale_bill->rest }} {{ $currency }}
+                                    {{ $sale_bill->rest }} 
                                 </td>
 
                             </tr>
@@ -699,14 +699,14 @@
                                 <td dir="rtl">
                                     {{ $discountNote ? $discountNote . ' || ' : '' }}
                                     ({{ round(($discountValue / $realtotal) * 100, 1) }}%) {{ $discountValue }}
-                                    {{ $currency }}
+                                    
                                 </td>
                                 <td style="text-align: right;padding-right: 14px;">@lang('sales_bills.Discount')</td>
                             </tr>
 
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
-                                <td dir="rtl">{{ $sumWithOutTax }} {{ $currency }}</td>
+                                <td dir="rtl">{{ $sumWithOutTax }} </td>
                                 <td style="text-align: right;padding-right: 14px;">@lang('sales_bills.Total, excluding tax')</td>
                             </tr>
 
@@ -721,9 +721,9 @@
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
                                 @if ($company->tax_value_added && $company->tax_value_added != 0)
-                                    <td dir="rtl">{{ $totalTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $totalTax }}</td>
                                 @else
-                                    <td dir="rtl">0 {{ $currency }} </td>
+                                    <td dir="rtl">0</td>
                                 @endif
                                 <td style="text-align: right;padding-right: 14px;">
                                     @lang('sales_bills.Total tax')
@@ -734,15 +734,15 @@
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: {{ $printColor }};color:white;">
                                 @if ($company->tax_value_added && $company->tax_value_added != 0)
-                                    <td dir="rtl">{{ $sumWithTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $sumWithTax }}</td>
                                 @else
-                                    <td dir="rtl">{{ $sumWithOutTax }} {{ $currency }} </td>
+                                    <td dir="rtl">{{ $sumWithOutTax }}</td>
                                 @endif
                                 <td style="text-align: right;padding-right: 14px;">@lang('sales_bills.Total including tax')</td>
                             </tr>
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
-                                <td dir="rtl">{{ $sale_bill->paid }} {{ $currency }}</td>
+                                <td dir="rtl">{{ $sale_bill->paid }} </td>
                                 <td style="text-align: right;padding-right: 14px;">
                                     @lang('sales_bills.The amount paid')
                                 </td>
@@ -750,7 +750,7 @@
                             <tr
                                 style="border-bottom:1px solid #2d2d2d30;font-weight: bold;font-size: 13px !important; height: 37px !important; text-align: center;background: #f8f9fb">
                                 <td dir="rtl">
-                                    {{ $sale_bill->rest }} {{ $currency }}
+                                    {{ $sale_bill->rest }} 
                                 </td>
                                 <td style="text-align: right;padding-right: 14px;">
                                     @lang('sales_bills.Residual')
