@@ -798,6 +798,7 @@
                                         <td
                                             style="text-align: right;padding-right: 14px;direction: rtl;padding-top: 15px;">
                                             {!! $company->basic_settings->sale_bill_condition !!}</td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>

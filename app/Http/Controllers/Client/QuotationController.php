@@ -101,8 +101,10 @@ class QuotationController extends Controller
         $pre_quotation = $company_id . rand();
         $pre_quotation = substr($pre_quotation, 0, 9);
         */
-        return view('client.quotations.create',
-            compact('company', 'outer_clients', 'units', 'stores', 'categories', 'extra_settings', 'company_id', 'all_products', 'pre_quotation', 'quoationsCount'));
+        return view(
+            'client.quotations.create',
+            compact('company', 'outer_clients', 'units', 'stores', 'categories', 'extra_settings', 'company_id', 'all_products', 'pre_quotation', 'quoationsCount')
+        );
     }
 
     # =============== #
@@ -140,7 +142,6 @@ class QuotationController extends Controller
                 $previous_discount_value = $previous_discount_value / 100 * $total;
             }
             $after_discount = $total - $previous_discount_value;
-
         }
         if (!empty($previous_extra) && !empty($previous_discount)) {
             $after_discount = $total - $previous_discount_value + $previous_extra_value;
@@ -167,7 +168,6 @@ class QuotationController extends Controller
         Mail::to($quotation->outerClient->client_email)->send(new sendingQuotation($data));
         return redirect()->route('client.quotations.index')
             ->with('success', 'تم  ارسال عرض السعر  الى بريد العميل بنجاح');
-
     }
 
     public function get_product_price(Request $request)
@@ -358,7 +358,6 @@ class QuotationController extends Controller
                 </div>
 
             </div>";
-
         }
 
         echo "
@@ -536,7 +535,6 @@ class QuotationController extends Controller
                 } else {
                     $after_extra = $total + $extra_value;
                 }
-
             } else if ($extra_type == "percent") {
                 $value = $extra_value / 100 * $total;
                 if (isset($previous_discount_value) && $previous_discount_value != 0) {
@@ -747,9 +745,22 @@ class QuotationController extends Controller
         }
         $safes = $company->safes;
         $banks = $company->banks;
-        return view('client.quotations.edit',
-            compact('quotation', 'categories', 'units', 'all_products', 'stores',
-                'extra_settings', 'safes', 'banks', 'outer_clients', 'company_id', 'company'));
+        return view(
+            'client.quotations.edit',
+            compact(
+                'quotation',
+                'categories',
+                'units',
+                'all_products',
+                'stores',
+                'extra_settings',
+                'safes',
+                'banks',
+                'outer_clients',
+                'company_id',
+                'company'
+            )
+        );
     }
 
     public function delete_bill(Request $request)
@@ -859,7 +870,6 @@ class QuotationController extends Controller
                 $previous_discount_value = $previous_discount_value / 100 * $total;
             }
             $after_discount = $total - $previous_discount_value;
-
         }
         if (!empty($previous_extra) && !empty($previous_discount)) {
             $after_discount = $total - $previous_discount_value + $previous_extra_value;
@@ -916,6 +926,7 @@ class QuotationController extends Controller
 
 
     // view quotation template
+    // view quotation template
     public function view($quotation_id)
     {
         # get company data #
@@ -966,18 +977,26 @@ class QuotationController extends Controller
             $totalQuotaitonPrice = $totalQuotaitonPrice + $shipping_value;
         }
 
-        return view('client.quotations.sample',
+        return view(
+            'client.quotations.sample',
             compact(
-                'company', 'quotation', 'totalQuotaitonPrice',
-                'taxValue', 'shipping_value', 'discount_value', 'productsTotal', 'tax_value_added',
-                'products'));
-
+                'company',
+                'quotation',
+                'totalQuotaitonPrice',
+                'taxValue',
+                'shipping_value',
+                'discount_value',
+                'productsTotal',
+                'tax_value_added',
+                'products'
+            )
+        );
     }
+
+
 
     public function updateConditions(Request $request)
     {
         return BasicSettings::where('company_id', Auth::user()->company_id)->firstOrFail()->update(['quotation_condition' => $request->condition]) ? 1 : 0;
     }
 }
-
-?>
