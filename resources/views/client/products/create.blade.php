@@ -377,7 +377,7 @@
             var category_type = $(this).children("option:selected").attr('type');
             if (category_type == 'خدمية') {
                 $('#first_balance').val("").attr('readonly', true);
-                $('#model').val("").attr('readonly', true);
+                $('#model').val("").attr('readonly', false);
                 // $('#order_universal').val("").attr('readonly', true);
                 $('#min_balance').attr('readonly', true);
                 $('#store').attr('disabled', true);

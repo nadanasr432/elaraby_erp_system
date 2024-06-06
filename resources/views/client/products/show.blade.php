@@ -36,7 +36,7 @@
                                 اسم المخزن
                                 <span class="text-danger font-weight-bold">*</span>
                             </label>
-                            <input type="text" disabled class="form-control" value="{{$product->store->store_name}}">
+                            <input type="text" disabled class="form-control" value="{{$product->store->store_name ?? " "}}">
                         </div>
                         <!---------------------->
 

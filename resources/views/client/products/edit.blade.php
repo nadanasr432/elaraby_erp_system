@@ -12,7 +12,6 @@
         height: 45px !important;
         padding: 10px !important;
     }
-
 </style>
 @section('content')
     @if (count($errors) > 0)
@@ -37,8 +36,7 @@
                         <h3 class="pull-right font-weight-bold ml-1">
                             تعديل باينات المنتج
                         </h3>
-                        <a class="btn btn-danger btn-sm pull-left p-1"
-                           onclick="history.back()">
+                        <a class="btn btn-danger btn-sm pull-left p-1" onclick="history.back()">
                             عودة للخلف
                         </a>
                     </div>
@@ -67,7 +65,7 @@
                                     <option value="">اختر المخزن choose the store</option>
                                     @foreach ($stores as $store)
                                         <option @if ($store->id == $product->store_id) selected @endif
-                                        value="{{ $store->id }}">{{ $store->store_name }}</option>
+                                            value="{{ $store->id }}">{{ $store->store_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -83,8 +81,8 @@
                                     <option value="">اختر الفئة الرئيسية</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
-                                                @if ($category->id == $product->category_id) selected @endif
-                                                type="{{ $category->category_type }}">{{ $category->category_name }}
+                                            @if ($category->id == $product->category_id) selected @endif
+                                            type="{{ $category->category_type }}">{{ $category->category_name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -101,7 +99,7 @@
                                     <option value="">اختر الفئة الفرعية</option>
                                     @foreach ($sub_categories as $category)
                                         <option @if ($category->id == $product->sub_category_id) selected @endif
-                                        value="{{ $category->id }}">
+                                            value="{{ $category->id }}">
                                             {{ $category->sub_category_name }}
                                         </option>
                                     @endforeach
@@ -112,9 +110,8 @@
                             <!----product_model---->
                             <div class="form-group col-lg-3 pr-0" dir="rtl">
                                 <label> موديل المنتج</label>
-                                <input type="text" name="product_model" value="{{$product->product_model}}"
-                                       placeholder="موديل المنتج" class="form-control"
-                                       id='model'>
+                                <input type="text" name="product_model" value="{{ $product->product_model }}"
+                                    placeholder="موديل المنتج" class="form-control" id='model'>
                             </div>
                             <!---------------------->
 
@@ -124,9 +121,8 @@
                                     اسم المنتج
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
-                                <input type="text" name="product_name" id="order_name"
-                                       placeholder="اسم المنتج" value="{{$product->product_name}}" class="form-control"
-                                       required>
+                                <input type="text" name="product_name" id="order_name" placeholder="اسم المنتج"
+                                    value="{{ $product->product_name }}" class="form-control" required>
                             </div>
                             <!---------------------->
 
@@ -139,9 +135,9 @@
                                 <select name="unit_id" class="form-control">
                                     <option value="">اختر وحدة</option>
                                     @foreach ($units as $unit)
-                                        <option
-                                            value="{{ $unit->id }}"
-                                            @if($unit->id == $product->unit_id) selected @endif>{{ $unit->unit_name }}</option>
+                                        <option value="{{ $unit->id }}"
+                                            @if ($unit->id == $product->unit_id) selected @endif>{{ $unit->unit_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -153,9 +149,8 @@
                                     رقم الباركود
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
-                                <input type="text" class="form-control" value="{{ $product->code_universal }}" dir="ltr"
-                                       placeholder="رقم الباركود"
-                                       id="order_universal" name="code_universal"/>
+                                <input type="text" class="form-control" value="{{ $product->code_universal }}"
+                                    dir="ltr" placeholder="رقم الباركود" id="order_universal" name="code_universal" />
                             </div>
                             <!---------------------->
 
@@ -165,8 +160,9 @@
                                     رصيد المخازن
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
-                                <input type="number" step="0.01" required placeholder="رصيد المخازن" name="first_balance"
-                                       id="first_balance" value="{{$product->first_balance}}" class="form-control">
+                                <input type="number" step="0.01" required placeholder="رصيد المخازن"
+                                    name="first_balance" id="first_balance" value="{{ $product->first_balance }}"
+                                    class="form-control">
                             </div>
                             <!---------------------->
 
@@ -177,8 +173,8 @@
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
                                 <input type="number" step="0.01" name="purchasing_price" id='purchasing_price'
-                                       class="form-control" value="{{$product->purchasing_price}}"
-                                       placeholder="سعر التكلفة">
+                                    class="form-control" value="{{ $product->purchasing_price }}"
+                                    placeholder="سعر التكلفة">
                             </div>
                             <!---------------------->
 
@@ -189,8 +185,8 @@
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
                                 <input type="number" step="0.01" name="wholesale_price" id="wholesale_price"
-                                       class="form-control" value="{{$product->wholesale_price}}"
-                                       placeholder="سعر الجملة">
+                                    class="form-control" value="{{ $product->wholesale_price }}"
+                                    placeholder="سعر الجملة">
                             </div>
                             <!-------------------->
 
@@ -201,8 +197,7 @@
                                     <span class="text-danger font-weight-bold">*</span>
                                 </label>
                                 <input type="number" step="0.01" name="sector_price" placeholder="سعر القطاعي"
-                                       id="sector_price" value="{{$product->sector_price}}"
-                                       class="form-control">
+                                    id="sector_price" value="{{ $product->sector_price }}" class="form-control">
                             </div>
                             <!-------------------->
 
@@ -210,35 +205,34 @@
                             <div class="form-group pull-right col-lg-3" dir="rtl">
                                 <label>رصيد حد أدنى المخازن</label>
                                 <input type="number" step="0.01" name="min_balance" id="min_balance"
-                                       class="form-control" value="{{$product->min_balance}}"/>
+                                    class="form-control" value="{{ $product->min_balance }}" />
                             </div>
                             <!-------------------->
 
                             <!-------color------->
                             <div class="form-group  col-lg-6 d-none" dir="rtl">
                                 <label>اختر لون</label>
-                                <input style="width: 100%!important;" type="color" placeholder="اختر اللون" name="color"
-                                       id="color"/>
+                                <input style="width: 100%!important;" type="color" placeholder="اختر اللون"
+                                    name="color" id="color" />
                             </div>
                             <!---------------------->
 
                             <!----description---->
                             <div class="form-group col-lg-6" dir="rtl">
                                 <label>وصف المنتج</label>
-                                <textarea name="description" id="description" class="form-control"
-                                          placeholder="وصف المنتج. . . ." style="height: 60% !important;"
-                                          rows="2">{{$product->description}}</textarea>
+                                <textarea name="description" id="description" class="form-control" placeholder="وصف المنتج. . . ."
+                                    style="height: 60% !important;" rows="2">{{ $product->description }}</textarea>
                             </div>
                             <!-------------------->
 
                             <div class="form-group col-lg-6 pull-right" dir="rtl">
                                 <label>صورة المنتج</label>
                                 <input accept=".jpg,.png,.jpeg" type="file" name="product_pic"
-                                       oninput="pic.src=window.URL.createObjectURL(this.files[0])" id="file"
-                                       class="form-control">
+                                    oninput="pic.src=window.URL.createObjectURL(this.files[0])" id="file"
+                                    class="form-control">
                                 <label class="d-block mt-2"> معاينة الصورة</label>
                                 <img id="pic" src="{{ asset($product->product_pic) }}"
-                                     style="width: 100px; height:100px;"/>
+                                    style="width: 100px; height:100px;" />
                             </div>
                             <!---------------------->
 
@@ -256,8 +250,7 @@
 
     <script src="{{ asset('app-assets/js/jquery.min.js') }}"></script>
     <script>
-
-        $("#selectForm2").submit(function (e) {
+        $("#selectForm2").submit(function(e) {
             e.preventDefault();
 
             var first_balance = $("#first_balance").val();
@@ -274,7 +267,7 @@
                 $("#first_balance").val("");
 
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#showErrMsg").hide("slow");
                 }, 4000);
 
@@ -291,7 +284,7 @@
                 $("#purchasing_price").val("");
 
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#showErrMsg").hide("slow");
                 }, 4000);
 
@@ -307,7 +300,7 @@
                 $("#wholesale_price").val("");
 
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#showErrMsg").hide("slow");
                 }, 4000);
 
@@ -323,7 +316,7 @@
                 $("#sector_price").val("");
 
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#showErrMsg").hide("slow");
                 }, 4000);
 
@@ -339,7 +332,7 @@
                 $("#min_balance").val("");
 
 
-                setTimeout(function () {
+                setTimeout(function() {
                     $("#showErrMsg").hide("slow");
                 }, 4000);
 
@@ -350,15 +343,14 @@
 
             $(this).submit();
 
-        });//end...
+        }); //end...
 
 
-        $(window).on('load', function () {
+        $(window).on('load', function() {
             var category_name = $('#category').val();
             var category_type = $('#category').children("option:selected").attr('type');
             if (category_type == 'خدمية') {
                 $('#first_balance').val("").attr('readonly', true);
-                $('#model').val("").attr('readonly', true);
                 $('#order_universal').val("").attr('readonly', true);
                 $('#min_balance').attr('readonly', true);
                 $('#store').attr('disabled', true);
@@ -370,12 +362,11 @@
                 $('#store').attr('disabled', false);
             }
         });
-        $('#category').on('change', function () {
+        $('#category').on('change', function() {
             var category_name = $(this).val();
             var category_type = $(this).children("option:selected").attr('type');
             if (category_type == 'خدمية') {
                 $('#first_balance').val("").attr('readonly', true);
-                $('#model').val("").attr('readonly', true);
                 $('#order_universal').val("").attr('readonly', true);
                 $('#min_balance').attr('readonly', true);
                 $('#store').attr('disabled', true);

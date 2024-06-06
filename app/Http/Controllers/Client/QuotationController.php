@@ -819,7 +819,7 @@ class QuotationController extends Controller
         ]);
     }
 
-    public function convert_to_salebill($id)
+    public function convert_to_salebill($id, $isMoswada = null, $printColor = null)
     {
         # get quotation details #
         $quotation = Quotation::FindOrFail($id);
@@ -857,7 +857,7 @@ class QuotationController extends Controller
             $previous_extra_type = $previous_extra->action_type;
             $previous_extra_value = $previous_extra->value;
             if ($previous_extra_type == "percent") {
-                $previous_extra_value = $previous_extra_value / 100 * $total;
+                $previous_extra_value = ($previous_extra_value / 100) * $total;
             }
             $after_discount = $total + $previous_extra_value;
         }
@@ -867,7 +867,7 @@ class QuotationController extends Controller
             $previous_discount_type = $previous_discount->action_type;
             $previous_discount_value = $previous_discount->value;
             if ($previous_discount_type == "percent") {
-                $previous_discount_value = $previous_discount_value / 100 * $total;
+                $previous_discount_value = ($previous_discount_value / 100) * $total;
             }
             $after_discount = $total - $previous_discount_value;
         }
@@ -886,7 +886,7 @@ class QuotationController extends Controller
         $final_total = $after_total_all;
         $rest = $final_total;
 
-        $saleBill = SaleBill::create([
+        $sale_bill = SaleBill::create([
             'company_id' => $company_id,
             'client_id' => $client_id,
             'company_counter' => $pre_counter,
@@ -903,7 +903,7 @@ class QuotationController extends Controller
 
         foreach ($quotation_elements as $element) {
             $salebill_element = SaleBillElement::create([
-                'sale_bill_id' => $saleBill->id,
+                'sale_bill_id' => $sale_bill->id,
                 'company_id' => $company_id,
                 'product_id' => $element->product_id,
                 'product_price' => $element->product_price,
@@ -915,14 +915,86 @@ class QuotationController extends Controller
         foreach ($quotation_extras as $extra) {
             $saleBill_extra = SaleBillExtra::create([
                 'company_id' => $company_id,
-                'sale_bill_id' => $saleBill->id,
+                'sale_bill_id' => $sale_bill->id,
                 'action' => $extra->action,
                 'action_type' => $extra->action_type,
                 'value' => $extra->value,
             ]);
         }
-        return redirect()->route('client.sale_bills.main', [$saleBill->token]);
+        $shipping = \App\Models\SaleBillExtra::where('sale_bill_id', $sale_bill->id)->where('company_id', $sale_bill->company_id)->where('action', 'extra')->first();
+        $discount = SaleBillExtra::where('sale_bill_id', $sale_bill->id)->where('company_id', $sale_bill->company_id)->where('action', 'discount')->first();
+        $extra_settings = ExtraSettings::where('company_id', $company_id)->first();
+        $currency = $extra_settings->currency;
+        $tax_value_added = $company->tax_value_added;
+        $elements = SaleBillElement::where('sale_bill_id', $sale_bill->id)
+            ->where('company_id', $sale_bill->company_id)
+            ->get();
+
+        $total = [];
+        foreach ($elements as $element) {
+            array_push($total, $element->quantity_price);
+        }
+        $realtotal = array_sum($total);
+        $total = $realtotal;
+
+        if ($discount && $discount->action_type) {
+            if ($discount->action_type == "poundAfterTax" || $discount->action_type == "poundAfterTaxPercent") {
+                $sumWithOutTax = $sale_bill->value_added_tax ? round($total * 20 / 23, 2) : round($total, 2);
+                $sumWithTax = $sale_bill->value_added_tax ? $total : round($total + $realtotal * 15 / 100, 2);
+                $totalTax = round($sumWithTax - $sumWithOutTax, 2);
+            } else {
+                $sumWithOutTax = $sale_bill->value_added_tax ? round($total * 20 / 23, 2) : round($total, 2);
+                $sumWithTax = $sale_bill->value_added_tax ? $total : round($total + $total * 15 / 100, 2);
+                $totalTax = round($sumWithTax - $sumWithOutTax, 2);
+            }
+            $discountNote = $discount->discount_note ?? '';
+        } else {
+            $sumWithOutTax = round($total, 2);
+            $sumWithTax = round($total + ($total * ($tax_value_added / 100)), 2);
+            $totalTax = round($sumWithTax - $sumWithOutTax, 2);
+            $discountNote = '';
+        }
+
+        if ($discount) {
+            if ($discount->action_type == "pound") {
+                $discountValue = $discount->value;
+                if (isset($shippingValue) && $shippingValue != 0) {
+                    $after_discount = $total - $discount->value + $shippingValue;
+                } else {
+                    $after_discount = $total - $discount->value;
+                }
+            } else if ($discount->action_type == "percent") {
+                $discountValue = ($discount->value / 100) * $total;
+                if (isset($shippingValue) && $shippingValue != 0) {
+                    $after_discount = $total - $discountValue + $shippingValue;
+                } else {
+                    $after_discount = $total - $discountValue;
+                }
+            } else if ($discount->action_type == "afterTax") {
+                $discountValue = ($discount->value / 100) * $total; // 10 / 100*100
+                if (isset($shippingValue) && $shippingValue != 0) {
+                    $after_discount = $total - $discountValue + $tax_value_added;
+                } else {
+                    $after_discount = $total - $discountValue;
+                }
+            } else if ($discount->action_type == "poundAfterTaxPercent") {
+                $discountValue = (($discount->value * $total) / 100);
+                $after_discount = $total - $discountValue;
+            } else {
+                $discountValue = $discount->value;
+                $after_discount = $total - $discountValue;
+            }
+        } else {
+            $after_discount = $total;
+        }
+
+        return view(
+            'client.sale_bills.main',
+            compact('isMoswada', 'realtotal', 'discountValue',
+                'sumWithOutTax', 'discountNote', 'elements', 'printColor', 'sale_bill', 'currency', 'company', 'sumWithTax', 'totalTax')
+        );
     }
+
 
 
     // view quotation template
