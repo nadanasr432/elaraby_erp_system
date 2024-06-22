@@ -60,14 +60,21 @@
                                         </td>
                                         <td>
                                             @foreach ($credits as $credit)
-                                                <span
-                                                    class="badge badge-primary ml-2">{{ $credit?->accountingTree->account_name }}</span>
+                                                <a
+                                                    href="{{ route('account.statement', ['accountId' => $credit?->accountingTree?->id]) }}">
+                                                    <span
+                                                        class="badge badge-primary ml-2">{{ $credit?->accountingTree?->account_name }}</span>
+                                                </a>
                                             @endforeach
                                         </td>
                                         <td>
                                             @foreach ($depits as $depit)
-                                                <span
-                                                    class="badge badge-success ml-2">{{ $depit?->accountingTree->account_name }}</span>
+                                                <a
+                                                    href="{{ route('account.statement', ['accountId' => $credit?->accountingTree?->id]) }}">
+
+                                                    <span
+                                                        class="badge badge-success ml-2">{{ $depit?->accountingTree->account_name }}</span>
+                                                </a>
                                             @endforeach
                                         <td>{{ $voucher->notation }}</td>
                                         <td>{{ $voucher->amount }}</td>

@@ -38,6 +38,7 @@ class OuterClientController extends Controller
             array_push($balances, $client_balance);
         }
         $total_balances = array_sum($balances);
+        // dd($outer_clients->toArray());
         return view('client.outer_clients.index', compact('company', 'total_balances', 'company_id', 'outer_clients'));
     }
 

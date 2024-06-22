@@ -511,7 +511,7 @@ class SaleBillController extends Controller
             if (!empty($sale_bill->outer_client_id)) {
                 $outer_client = OuterClient::FindOrFail($sale_bill->outer_client_id);
                 $outer_client->update([
-                    'prev_balance' => $outer_client->prev_balance + $rest
+                    'prev_balance' => ($outer_client->prev_balance) + $rest,
                 ]);
             }
             $sale_bill->update([
@@ -1966,7 +1966,7 @@ class SaleBillController extends Controller
                         'client.sale_bills.print4',
                         compact('isMoswada', 'discountNote', 'printColor', 'sale_bill', 'elements', 'company', 'currency', 'pageData', 'sumWithTax', 'sumWithOutTax', 'totalTax', 'realtotal', 'discountValue')
                     );
-                } 
+                }
                  elseif ($invoiceType == 3) {
                     return view(
                         'client.sale_bills.no_tax_print',

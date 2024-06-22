@@ -7,12 +7,13 @@ use App\Models\Voucher;
 use Illuminate\Http\Request;
 use App\Models\accounting_tree;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 
 class VoucherController extends Controller
 {
     public function get_voucher_entries()
     {
-    $vouchers = Voucher::all();
+        $vouchers = Voucher::all();
         return view('client.voucher.index', compact('vouchers'));
     }
 
@@ -24,7 +25,6 @@ class VoucherController extends Controller
 
     public function store(Request $request)
     {
-        // dd(auth::user()->id);
         $request->validate([
             'amount' => 'required',
             'date' => 'required',
@@ -35,26 +35,46 @@ class VoucherController extends Controller
             'transactions.*.notation' => 'nullable|string',
             // 'transactions.*.type' => 'required|in:0,1',
         ]);
-        $voucher = Voucher::create([
-            'amount' => $request->amount,
-            'date' => $request->date,
-            'payment_method' => "cash",
-            'notation' => $request->notation,
-            'status' => 1,
-            'user_id' => auth::user()->id,
-            'options' => 0,
-        ]);
-        foreach ($request->transactions as $transaction) {
-            Transaction::create(
-                [
+
+        DB::beginTransaction();
+
+        try {
+            $voucher = Voucher::create([
+                'amount' => $request->amount,
+                'date' => $request->date,
+                'payment_method' => "cash",
+                'notation' => $request->notation,
+                'status' => 1,
+                'user_id' => auth::user()->id,
+                'options' => 0,
+            ]);
+
+            foreach ($request->transactions as $transaction) {
+                Transaction::create([
                     'accounting_tree_id' => $transaction['account'],
                     'voucher_id' => $voucher->id,
                     'amount' => $transaction['credit'] ? $transaction['credit'] : $transaction['debit'],
                     'notation' => $transaction['notation'],
                     'type' => $transaction['credit'] ? 0 : 1,
-                ]
-            );
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json($voucher->id);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => 'An error occurred while creating the voucher.'], 500);
         }
-        return response()->json($voucher->id);
+    }
+
+    public function showAccountStatement($accountId)
+    {
+        $transactions = Transaction::where('accounting_tree_id', $accountId)->get();
+        $totalDebit = $transactions->where('type', 1)->sum('amount');
+        $totalCredit = $transactions->where('type', 0)->sum('amount');
+
+        return view('client.voucher.statement', compact('transactions', 'totalDebit', 'totalCredit'));
     }
 }

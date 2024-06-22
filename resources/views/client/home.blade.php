@@ -15,7 +15,7 @@
         background-color: #28d094;
     }
     .mobilePOSBtn2 {
-      
+
         background: white;  border: 1px dashed #449f2d; padding: 1px 5px 11px 7px !important; border-radius: 31px;
         font-weight: bold;
         position: fixed;
@@ -23,7 +23,7 @@
         display: block;
         left: 340px;
         bottom: 70px;
-      
+
     }
 
     @media screen and (max-width: 650px) {
@@ -1004,7 +1004,7 @@
                       style="font-size: 16px !important;">@lang('home.Quick shortcuts') </span>
                 <span
                     class="notification-tag badge badge-default badge-danger float-right m-0">
-                   @lang('home.New') 
+                   @lang('home.New')
                 </span>
             </h4>
         </li>
@@ -1015,7 +1015,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-                @lang('home.Add category') 
+                @lang('home.Add category')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.products.create') }}">
@@ -1031,7 +1031,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-              @lang('home.Add a client') 
+              @lang('home.Add a client')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.suppliers.create') }}">
@@ -1039,7 +1039,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-              @lang('home.Add a resource')  
+              @lang('home.Add a resource')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.sale_bills.create') }}">
@@ -1047,7 +1047,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-              @lang('home.New bill of sale')  
+              @lang('home.New bill of sale')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.purchase_orders.create') }}">
@@ -1055,7 +1055,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-               @lang('home.New purchase invoice') 
+               @lang('home.New purchase invoice')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.add.cash.suppliers') }}">
@@ -1063,7 +1063,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-               @lang('home.Cash payment to a supplier') 
+               @lang('home.Cash payment to a supplier')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.give.cash.clients') }}">
@@ -1071,7 +1071,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-              @lang('home.Cash payment to a customer')  
+              @lang('home.Cash payment to a customer')
             </a>
 
             <a class="dropdown-item" href="{{ route('employees.get.cash') }}">
@@ -1079,7 +1079,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-             @lang('home.Cash payment to an employee')   
+             @lang('home.Cash payment to an employee')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.add.cash.clients') }}">
@@ -1087,7 +1087,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-              @lang('home.Register a payment from a customer')  
+              @lang('home.Register a payment from a customer')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.give.cash.suppliers') }}">
@@ -1095,7 +1095,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-               @lang('home.Register a batch from a supplier') 
+               @lang('home.Register a batch from a supplier')
             </a>
 
             <a class="dropdown-item" href="{{ route('client.expenses.create') }}">
@@ -1103,7 +1103,7 @@
                     <path
                         d="M160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256C352 309 309 352 256 352C202.1 352 160 309 160 256zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path>
                 </svg>
-               @lang('home.Register a batch from an employee') 
+               @lang('home.Register a batch from an employee')
             </a>
         </li>
     </ul>

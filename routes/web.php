@@ -948,10 +948,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => [\Mc
             Route::get('/prod_pos/{invID}', [PosController::class, 'prod_pos'])->name('pos.prod_pos');
 
 
-            // Journal routes
+            // Journal routes voucher routes
             Route::get('/voucher/create', [VoucherController::class, 'create_voucher_entries'])->name('client.voucher.create');
-            Route::get('/voucher/get', [VoucherController::class, 'get_voucher_entries'])->name('client.voucher.get');
+            Route::get('/vouchers', [VoucherController::class, 'get_voucher_entries'])->name('client.voucher.get');
             Route::post('/voucher/store', [VoucherController::class, 'store'])->name('client.voucher.store');
+            Route::get('/account/{accountId}/statement', [VoucherController::class, 'showAccountStatement'])->name('account.statement');
+
             // Route::post('/journal/store', [VoucherController::class, 'store_journal_entries'])->name('client.journal.store');
 
             // Cost Center routes

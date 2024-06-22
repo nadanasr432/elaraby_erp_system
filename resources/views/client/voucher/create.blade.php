@@ -332,7 +332,7 @@
                 success: (data) => {
                     alert('تمت العملية بنجاح');
                     setTimeout(function(){
-                        window.location.href="/client/voucher/get";
+                        window.location.href="/client/vouchers";
                     },500);
                 },
                 error: (data) => {
